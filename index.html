@@ -21,7 +21,7 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 0; padding-bottom: 90px; }
 
-        /* شاشة البداية */
+        /* شاشة البداية مع زر تخطي فوري لمنع أي تعليق */
         #splash-screen {
             position: fixed;
             inset: 0;
@@ -32,11 +32,22 @@
             justify-content: center;
             align-items: center;
             z-index: 99999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
         }
-        .splash-logo { font-size: 38px; font-weight: 900; letter-spacing: 1px; margin-bottom: 5px; }
-        .splash-sub { font-size: 14px; opacity: 0.85; margin-bottom: 25px; }
-        .splash-loader { font-size: 13px; background: rgba(255,255,255,0.2); padding: 8px 18px; border-radius: 20px; }
+        .splash-logo { font-size: 40px; font-weight: 900; margin-bottom: 5px; }
+        .splash-sub { font-size: 15px; opacity: 0.9; margin-bottom: 30px; }
+        .skip-btn {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .skip-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
         /* شاشة القفل */
         #lock-screen {
@@ -208,7 +219,7 @@
         }
         .mindmap-btn:hover { background: #fae8ff; }
 
-        /* شاشة الدرس والشرح الوافي */
+        /* شاشة الدرس والشرح */
         #lesson-view { display: none; }
         .back-btn {
             background: #ffffff;
@@ -271,7 +282,7 @@
         .opt-btn.correct { background: #d1fae5; border-color: var(--success); color: #065f46; }
         .opt-btn.wrong { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
 
-        /* خريطة ذهنية شكل صورة وفروع */
+        /* الخريطة الذهنية البصرية */
         #mindmap-view { display: none; }
         .map-card-container {
             display: flex;
@@ -295,7 +306,7 @@
         .map-branch-title { font-weight: bold; color: var(--accent); font-size: 15px; }
         .map-branch-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
-        /* شريط التنقل */
+        /* التنقل السفلي */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -315,11 +326,11 @@
 </head>
 <body>
 
-    <!-- شاشة البداية -->
+    <!-- شاشة البداية مع زر تخطي فوري لضمان عدم التعليق -->
     <div id="splash-screen">
         <div class="splash-logo">BONZO</div>
         <div class="splash-sub">كبسولة العلوم في جيبك 🧪</div>
-        <div class="splash-loader">بجهز كسبولتك يا بطل.. ⏳</div>
+        <button class="skip-btn" onclick="dismissSplash()">دخول التطبيق 🚀</button>
     </div>
 
     <!-- شاشة القفل -->
@@ -373,7 +384,7 @@
             <div id="units-container"></div>
         </div>
 
-        <!-- الخريطة الذهنية البصرية المتفرعة -->
+        <!-- الخريطة الذهنية البصرية -->
         <div id="mindmap-view">
             <button class="back-btn" onclick="goHome()">⬅ رجوع للوحدات</button>
             <div class="content-box">
@@ -414,7 +425,6 @@
     <script>
         const MASTER_CODE = "28606183300114";
 
-        // الشرح الوافي المفصل للـ 11 درس (مع الحفاظ على البصمة اللغوية السلسة والواضحة بدون أمثلة الفندق)
         const unitsData = [
             {
                 id: 1,
@@ -469,4 +479,334 @@
                         id: 'u2_l1',
                         title: 'التفاعلات الكيميائية',
                         subtitle: 'كسر الروابط وتكوين مواد جديدة',
-                        story: `التفاعل الكيميائي
+                        story: `التفاعل الكيميائي ليس مجرد خلط عشوائي، بل هو عملية إعادة ترتيب دقيقة لذرّات العناصر. باختصار شديد، يتم كسر الروابط الكيميائية الموجودة بين جزيئات المواد المتفاعلة، لتتكون روابط جديدة كلياً في جزيئات النواتج، مما ينتج عنه مواد ذات صفات وخواص فريدة ومختلفة تماماً عن المواد الأصلية.`,
+                        examDef: '• التفاعل الكيميائي: هو كسر الروابط الموجودة في جزيئات مواد التفاعل وتكوين روابط جديدة في جزيئات مواد النواتج.',
+                        question: 'سؤال الامتحان: كسر الروابط في المواد المتفاعلة وتكوين روابط جديدة في النواتج يُعرف بـ:',
+                        options: [
+                            { text: 'التفاعل الكيميائي', correct: true },
+                            { text: 'التغير الفيزيائي', correct: false },
+                            { text: 'الانصهار البحت', correct: false }
+                        ]
+                    },
+                    {
+                        id: 'u2_l2',
+                        title: 'وزن المعادلة الكيميائية',
+                        subtitle: 'قانون بقاء الكتلة ولافوازييه',
+                        story: `الطبيعة تحترم القوانين ولا تقبل الفوضى؛ لذلك وضع العالم الجليل أنطوان لافوازييه "قانون بقاء الكتلة" والذي ينص على أن المادة لا تفنى ولا تستحدث من العدم خلال التفاعل الكيميائي. من هنا جاءت ضرورة "وزن المعادلة" بحيث يكون مجموع كتل المواد المتفاعلة مساوياً تماماً لمجموع كتل المواد الناتجة.`,
+                        examDef: '• قانون بقاء الكتلة: مجموع كتل المواد المتفاعلة في أي تفاعل كيميائي يساوي مجموع كتل المواد الناتجة عنه.',
+                        question: 'سؤال الامتحان: العالم الذي وضع قانون بقاء الكتلة في التفاعلات الكيميائية هو:',
+                        options: [
+                            { text: 'أنطوان لافوازييه', correct: true },
+                            { text: 'ألبرت أينشتاين', correct: false },
+                            { text: 'إسحاق نيوتن', correct: false }
+                        ]
+                    },
+                    {
+                        id: 'u2_l3',
+                        title: 'التغيرات الفيزيائية والكيميائية',
+                        subtitle: 'الفرق بين قطع الورق وحرق الورق',
+                        story: `الفرق الجوهري بين النوعين يكمن في جوهر المادة:\n• التغير الفيزيائي: يغير الشكل الخارجي أو الحالة فقط (مثل انصهار الشمع أو قطع الورق) دون أن يمس التركيب الداخلي.\n• التغير الكيميائي: يغير تركيب المادة جذرياً ليولد مواد جديدة كلياً بخصائص مختلفة (مثل احتراق الورق أو صدأ الحديد).`,
+                        examDef: '• التغير الفيزيائي: تغير في الشكل الظاهري للمادة دون تغير في تركيبها.\n• التغير الكيميائي: تغير في تركيب المادة ينتج عنه مواد جديدة ذات خواص جديدة.',
+                        question: 'سؤال الامتحان: صدأ الحديد يعتبر تغيراً:',
+                        options: [
+                            { text: 'فيزيائياً', correct: false },
+                            { text: 'كيميائياً', correct: true },
+                            { text: 'شكلياً عشوائياً', correct: false }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "الوحدة الثالثة: الطاقة الضوئية والبوست الحيوي",
+                lessons: [
+                    {
+                        id: 'u3_l1',
+                        title: 'عملية البناء الضوئي',
+                        subtitle: 'مطبخ النبات (الجرانا والستروما)',
+                        story: `النباتات كائنات ذاتية الغذاء، تمتلك مصانع خارقة الدقة تُسمى (البلاستيدات الخضراء). تنقسم هذه العمليات الحيوية إلى قسمين:\n1. تفاعلات ضوئية: تحدث في أقراص (الجرانا) وتعتمد على ضوء الشمس لتقسيم جزيئات الماء.\n2. تفاعلات لاضوئية: تحدث داخل الحشوة (الستروما) ولا تتطلب ضوءاً مباشراً، حيث يتم اختزال ثاني أكسيد الكربون لإنتاج سكر الجلوكوز الغذائي.`,
+                        examDef: '• البلاستيدات الخضراء: عضيات الخلية النباتية التي تحتوي على الكلوروفيل وتتم فيها عملية البناء الضوئي.\n• الستروما: السائل أو الحشوة الداخلية التي تحدث فيها التفاعلات اللاضوئية.',
+                        question: 'سؤال الامتحان: المكان الذي تحدث فيه التفاعلات اللاضوئية لعملية البناء الضوئي داخل البلاستيدة هو:',
+                        options: [
+                            { text: 'الستروما', correct: true },
+                            { text: 'الجرانا', correct: false },
+                            { text: 'الجذر الأرضي', correct: false }
+                        ]
+                    },
+                    {
+                        id: 'u3_l2',
+                        title: 'خصائص الضوء والانعكاس',
+                        subtitle: 'زاوية السقوط وزاوية الانعكاس',
+                        story: `يسير الضوء في خطوط مستقيمة حتى يواجه سطحاً عاكساً. وينص القانون الأول لانعكاس الضوء على حقيقة رياضية وفيزيائية ثابتة: (زاوية السقوط تساوي دائماً زاوية الانعكاس)، وهو الأساس البصري الذي تُبنى عليه المرايا والأجهزة البصرية ببرود ووضوح تام.`,
+                        examDef: '• قانون انعكاس الضوء الأول: زاوية السقوط تساوي زاوية الانعكاس.',
+                        question: 'سؤال الامتحان: إذا كانت زاوية السقوط لشعاع ضوئي 50 درجة، فإن زاوية الانعكاس تساوي:',
+                        options: [
+                            { text: '25 درجة', correct: false },
+                            { text: '50 درجة', correct: true },
+                            { text: '100 درجة', correct: false }
+                        ]
+                    },
+                    {
+                        id: 'u3_l3',
+                        title: 'انكسار الضوء في الوسطين',
+                        subtitle: 'ليه المعلقة بتبان مكسورة في المية؟',
+                        story: `عندما ينتقل الشعاع الضوئي مائلاً بين وسطين شفافين مختلفين في الكثافة الضوئية (كالهواء والماء)، فإنه ينحرف عن مساره الأصلي نتيجة لتغير سرعته، وهي ظاهرة فيزيائية تُعرف بـ (انكسار الضوء) وتفسر لنا رؤية الأجسام المغمورة في الماء في غير مواضعها الحقيقية.`,
+                        examDef: '• انكسار الضوء: تغير مسار الشعاع الضوئي عند انتقاله بين وسطين شفافين مختلفين في الكثافة الضوئية.',
+                        question: 'سؤال الامتحان: تغير مسار الشعاع الضوئي عند انتقاله بين وسطين شفافين مختلفين في الكثافة الضوئية يسمى:',
+                        options: [
+                            { text: 'انعكاس الضوء', correct: false },
+                            { text: 'انكسار الضوء', correct: true },
+                            { text: 'تشتت الضوء', correct: false }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "الوحدة الرابعة: كوكب الأرض والحركات الأرضية",
+                lessons: [
+                    {
+                        id: 'u4_l1',
+                        title: 'طبقات الأرض الداخلية',
+                        subtitle: 'القشرة، الوشاح، واللب',
+                        story: `يتكون كوكب الأرض من نطاقات دقيقة مترتبة كطبقات متتالية:\n1. القشرة الأرضية: الغلاف الخارجي الرقيق الذي نعيش عليه.\n2. الوشاح: طبقة صخرية سميكة تتميز بصخورها المنصهرة وشبه السائلة.\n3. اللب (المركز): وينقسم إلى لب خارجي مصهور ولب داخلي صلب وعالي الكثافة يتكون من الحديد والنيكل.`,
+                        examDef: '• الوشاح: طبقة صخرية سميكة تقع أسفل القشرة الأرضية.\n• اللب الداخلي: مركز الأرض ويتكون من عناصر فلزية ثقيلة صلبة.',
+                        question: 'سؤال الامتحان: الطبقة الأكثر عمقاً في مركز كوكب الأرض الصلب هي:',
+                        options: [
+                            { text: 'القشرة الأرضية', correct: false },
+                            { text: 'اللب الداخلي', correct: true },
+                            { text: 'الوشاح العلوي', correct: false }
+                        ]
+                    },
+                    {
+                        id: 'u4_l2',
+                        title: 'الصفائح التكتونية والزلازل',
+                        subtitle: 'تكون البحر الأحمر والجبال',
+                        story: `الغلاف الصخري للأرض ليس كتلة واحدة، بل مقسم إلى ألواح ضخمة تُسمى "الصفائح التكتونية" تطفو وتتحرك ببطء شديد فوق الوشاح المنصهر. وحركة هذه الصفائح – إما بالتباعد لتكوين بحار جديدة كالبحر الأحمر، أو بالتقارب لتشكل سلاسل الجبال الكبرى والزلازل – هي التي تصوغ شكل كوكبنا باستمرار.`,
+                        examDef: '• الصفائح التكتونية: قطع ضخمة ومتقطعة تشكل الغلاف الصخري للأرض وتحرك ببطء.',
+                        question: 'سؤال الامتحان: حركة تباعد صفيحتين قاريتين عن بعضهما تؤدي إلى نشأة:',
+                        options: [
+                            { text: 'تكون البحر الأحمر', correct: true },
+                            { text: 'جبال الهيمالايا', correct: false },
+                            { text: 'الأخدود العظيم', correct: false }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let completedLessons = JSON.parse(localStorage.getItem('sci_completed_11') || '[]');
+
+        function dismissSplash() {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            setTimeout(() => splash.style.display = 'none', 400);
+            checkSubscription();
+        }
+
+        // تفادي التعليق: إخفاء الشاشة تلقائياً بعد ثانيتين لو المستخدم مضغطش
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            if(splash && splash.style.display !== 'none') {
+                dismissSplash();
+            }
+        }, 2000);
+
+        function checkSubscription() {
+            const expiry = localStorage.getItem('sci_expiry');
+            const now = Date.now();
+            const timerEl = document.getElementById('timer-display');
+
+            if (expiry && now < parseInt(expiry)) {
+                document.getElementById('lock-screen').style.display = 'none';
+                const diff = parseInt(expiry) - now;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                
+                if (days > 0) {
+                    timerEl.innerText = `⏳ باقي ${days} يوم و ${hours} س`;
+                } else {
+                    timerEl.innerText = `⏳ باقي ${hours} ساعة`;
+                }
+            } else {
+                localStorage.removeItem('sci_expiry');
+                document.getElementById('lock-screen').style.display = 'flex';
+                timerEl.innerText = '🔒 منتهي';
+            }
+        }
+
+        function unlockApp() {
+            const code = document.getElementById('code-input').value.trim();
+            const val = parseInt(document.getElementById('duration-val').value);
+            const unit = document.getElementById('duration-unit').value;
+            const err = document.getElementById('error-msg');
+
+            if (code === MASTER_CODE && val > 0) {
+                const ms = unit === 'days' ? val * 24 * 60 * 60 * 1000 : val * 60 * 60 * 1000;
+                localStorage.setItem('sci_expiry', Date.now() + ms);
+                err.style.display = 'none';
+                document.getElementById('code-input').value = '';
+                checkSubscription();
+            } else {
+                err.style.display = 'block';
+            }
+        }
+
+        function resetLockNow() {
+            if(confirm('عايز تقفل التطبيق وتخرج لشاشة الكود؟')) {
+                localStorage.removeItem('sci_expiry');
+                checkSubscription();
+            }
+        }
+
+        function renderHome() {
+            const container = document.getElementById('units-container');
+            container.innerHTML = '';
+            
+            let totalDone = completedLessons.length;
+            document.getElementById('progress-text').innerText = `${totalDone} / 11 درس`;
+
+            unitsData.forEach(unit => {
+                let unitDoneCount = unit.lessons.filter(l => completedLessons.includes(l.id)).length;
+                let isUnitComplete = unitDoneCount === unit.lessons.length;
+
+                const unitCard = document.createElement('div');
+                unitCard.className = 'unit-card';
+
+                let lessonsHTML = '';
+                unit.lessons.forEach(l => {
+                    let isDone = completedLessons.includes(l.id);
+                    lessonsHTML += `
+                        <div class="lesson-tree-item ${isDone ? 'done' : ''}" onclick="openLesson('${l.id}')">
+                            <div class="lesson-tree-info">
+                                <h4>${l.title} ${isDone ? '✅' : ''}</h4>
+                                <p>${l.subtitle}</p>
+                            </div>
+                            <div class="check-icon">${isDone ? '✓' : '➔'}</div>
+                        </div>
+                    `;
+                });
+
+                unitCard.innerHTML = `
+                    <div class="unit-header">
+                        <div class="unit-title-box">
+                            <h3>${unit.title}</h3>
+                            <span>${unitDoneCount} من ${unit.lessons.length} دروس متقنة</span>
+                        </div>
+                        <div class="unit-badge">${isUnitComplete ? 'مكتملة ⭐' : `${unitDoneCount}/${unit.lessons.length}`}</div>
+                    </div>
+                    <div style="margin-bottom: 12px;">${lessonsHTML}</div>
+                    <button class="mindmap-btn" onclick="openMindMap(${unit.id})">🗺️ عرض الخريطة الذهنية البصرية للوحدة</button>
+                `;
+                container.appendChild(unitCard);
+            });
+        }
+
+        function openMindMap(unitId) {
+            const unit = unitsData.find(u => u.id === unitId);
+            if(!unit) return;
+
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('lesson-view').style.display = 'none';
+            document.getElementById('mindmap-view').style.display = 'block';
+
+            document.getElementById('mm-title').innerText = `🗺️ خريطة ${unit.title}`;
+            
+            let nodesHTML = '';
+            unit.lessons.forEach(l => {
+                let isDone = completedLessons.includes(l.id);
+                nodesHTML += `
+                    <div class="map-branch-node" onclick="openLesson('${l.id}')">
+                        <div>
+                            <div class="map-branch-title">📌 ${l.title} ${isDone ? '✅' : ''}</div>
+                            <div class="map-branch-sub">${l.subtitle}</div>
+                        </div>
+                        <div style="color: var(--accent); font-weight: bold;">مراجعة الفروع ➔</div>
+                    </div>
+                `;
+            });
+            document.getElementById('mindmap-content') // Fixed element ID reference below
+            document.getElementById('mm-content').innerHTML = nodesHTML;
+            window.scrollTo(0,0);
+        }
+
+        function openLesson(id) {
+            let foundLesson = null;
+            unitsData.forEach(u => {
+                let l = u.lessons.find(item => item.id === id);
+                if(l) foundLesson = l;
+            });
+            if(!foundLesson) return;
+
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('mindmap-view').style.display = 'none';
+            document.getElementById('lesson-view').style.display = 'block';
+
+            document.getElementById('l-title').innerText = foundLesson.title;
+            document.getElementById('l-story').innerText = foundLesson.story;
+            document.getElementById('l-exam-def').innerText = foundLesson.examDef;
+            document.getElementById('l-question').innerText = foundLesson.question;
+
+            const optBox = document.getElementById('l-options');
+            optBox.innerHTML = '';
+            foundLesson.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerText = opt.text;
+                btn.onclick = () => handleAnswer(btn, opt.correct, foundLesson.id);
+                optBox.appendChild(btn);
+            });
+            window.scrollTo(0,0);
+        }
+
+        function handleAnswer(btn, isCorrect, lessonId) {
+            const allBtns = document.querySelectorAll('.opt-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+            if(isCorrect) {
+                btn.classList.add('correct');
+                if(!completedLessons.includes(lessonId)) {
+                    completedLessons.push(lessonId);
+                    localStorage.setItem('sci_completed_11', JSON.stringify(completedLessons));
+                }
+                setTimeout(() => {
+                    alert('🎉 بطل العظمة! إجابة صحيحة وتم إتقان الدرس ⭐');
+                    goHome();
+                }, 400);
+            } else {
+                btn.classList.add('wrong');
+                setTimeout(() => {
+                    alert('❌ ركز في خلاصة الامتحان فوق وجرب تاني يا وحش!');
+                    allBtns.forEach(b => {
+                        b.style.pointerEvents = 'auto';
+                        b.classList.remove('wrong');
+                    });
+                }, 500);
+            }
+        }
+
+        function goHome() {
+            document.getElementById('lesson-view').style.display = 'none';
+            document.getElementById('mindmap-view').style.display = 'none';
+            document.getElementById('home-view').style.display = 'block';
+            renderHome();
+        }
+
+        function openRandomQuiz() {
+            let allLessons = [];
+            unitsData.forEach(u => allLessons.push(...u.lessons));
+            let randomLesson = allLessons[Math.floor(Math.random() * allLessons.length)];
+            openLesson(randomLesson.id);
+        }
+
+        renderHome();
+        setInterval(checkSubscription, 30000);
+
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(reg => {
+                reg.update(); // يجبر التحديث الجديد على التحميل فوراً
+            }).catch(()=>{});
+        }
+    </script>
+</body>
+</html>
