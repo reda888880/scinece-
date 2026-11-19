@@ -3,37 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية العلوم الشاملة - الصف الثاني الإعدادي</title>
+    <title>أكاديمية العلوم التفاعلية</title>
     <link rel="manifest" href="manifest.json">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent: #38bdf8;
-            --success: #22c55e;
+            --bg-color: #f4f6fb;
+            --card-bg: #ffffff;
+            --accent: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --star-gold: #f59e0b;
+            --success: #10b981;
             --danger: #ef4444;
-            --star-color: #fbbf24;
-            --text-color: #f8fafc;
-            --secondary-text: #94a3b8;
+            --exam-box-bg: #eff6ff;
+            --exam-border: #3b82f6;
         }
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             margin: 0;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            padding: 0;
+            padding-bottom: 80px;
         }
 
-        /* شاشة القفل والاشتراك */
+        /* شاشة القفل وتحديد المدة */
         #lock-screen {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.98);
+            background: rgba(15, 23, 42, 0.96);
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
@@ -42,340 +41,572 @@
             padding: 20px;
         }
         .lock-box {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 400px;
+            background: #ffffff;
+            padding: 28px;
+            border-radius: 24px;
+            max-width: 380px;
             width: 100%;
             text-align: center;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
         }
-        .lock-box h2 { color: var(--accent); margin-top: 0; }
-        .lock-box p { color: var(--secondary-text); font-size: 14px; line-height: 1.6; }
+        .lock-box h2 { color: var(--accent); margin: 10px 0 5px; }
+        .lock-box p { color: var(--text-muted); font-size: 13px; margin-bottom: 18px; }
+        .input-group { margin-bottom: 12px; text-align: right; }
+        .input-group label { font-size: 12px; font-weight: bold; color: var(--text-main); display: block; margin-bottom: 5px; }
         .lock-input {
             width: 100%;
-            padding: 14px;
-            margin: 15px 0;
+            padding: 12px;
             border-radius: 12px;
-            border: 2px solid #334155;
-            background: #0f172a;
-            color: #fff;
+            border: 2px solid #e2e8f0;
+            background: #f8fafc;
             font-size: 18px;
             text-align: center;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
-        .lock-input:focus { outline: none; border-color: var(--accent); }
+        .duration-row { display: flex; gap: 10px; }
+        .duration-row input { width: 55%; letter-spacing: normal; font-size: 16px; }
+        .duration-row select {
+            width: 45%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
         .btn-activate {
             width: 100%;
             padding: 14px;
+            margin-top: 10px;
             border: none;
-            border-radius: 12px;
-            background: var(--accent);
-            color: #0f172a;
+            border-radius: 14px;
+            background: var(--accent-gradient);
+            color: #fff;
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .btn-activate:hover { opacity: 0.9; }
-        #error-msg { color: var(--danger); font-size: 13px; margin-top: 10px; display: none; }
+        #error-msg { color: var(--danger); font-size: 13px; margin-top: 10px; display: none; font-weight: bold; }
 
-        /* شريط العداد والنجوم العلوي */
-        .game-header {
-            width: 100%;
-            max-width: 850px;
+        /* الهيدر العلوي */
+        .top-header {
+            background: #ffffff;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--card-bg);
-            padding: 12px 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .stars-display { font-size: 18px; font-weight: bold; color: var(--star-color); }
-
-        .container { width: 100%; max-width: 850px; }
-        header { text-align: center; margin-bottom: 25px; }
-        header h1 { color: var(--accent); font-size: 26px; margin-bottom: 5px; }
-        header p { color: var(--secondary-text); font-size: 14px; }
-
-        .units-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 15px;
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
         }
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .card:hover { transform: translateY(-3px); border-color: var(--accent); }
-        .card h3 { margin-top: 0; color: var(--accent); font-size: 18px; }
-        .card p { color: var(--secondary-text); font-size: 13px; }
-
-        /* شاشة الدرس واللعبة */
-        #game-screen {
-            display: none;
-            background: var(--card-bg);
-            padding: 25px;
+        .brand-info h1 { margin: 0; font-size: 16px; font-weight: 800; }
+        .brand-info span { font-size: 11px; color: var(--text-muted); display: block; }
+        .timer-pill {
+            background: #eef2ff;
+            color: var(--accent);
+            padding: 6px 12px;
             border-radius: 20px;
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-size: 12px;
+            font-weight: 700;
         }
-        .lesson-text {
-            background: rgba(15, 23, 42, 0.6);
+
+        .container { max-width: 550px; margin: 0 auto; padding: 16px; }
+
+        /* البانر الترحيبي */
+        .hero-card {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 22px;
+            border-radius: 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 12px 20px -5px rgba(99, 102, 241, 0.35);
+        }
+        .hero-card h2 { margin: 0 0 6px; font-size: 20px; }
+        .hero-card p { margin: 0 0 14px; font-size: 13px; opacity: 0.9; }
+        .hero-next-btn {
+            background: #facc15;
+            color: #1e293b;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .stats-row { display: flex; gap: 10px; margin-bottom: 22px; }
+        .stat-box {
+            flex: 1;
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .stat-box span { display: block; font-size: 18px; font-weight: 800; color: var(--text-main); }
+        .stat-box small { font-size: 11px; color: var(--text-muted); }
+
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .section-header h3 { margin: 0; font-size: 16px; }
+        .lesson-card {
+            background: #ffffff;
             padding: 15px;
-            border-radius: 12px;
-            line-height: 1.8;
-            font-size: 15px;
-            margin-bottom: 20px;
-            border-right: 4px solid var(--accent);
+            border-radius: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            cursor: pointer;
+            transition: transform 0.15s;
         }
-        .question-box h3 { color: var(--star-color); margin-bottom: 15px; }
-        .option-btn {
+        .lesson-card:active { transform: scale(0.98); }
+        .lesson-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .lesson-details { flex: 1; }
+        .lesson-details h4 { margin: 0 0 4px; font-size: 15px; }
+        .lesson-details p { margin: 0; font-size: 12px; color: var(--text-muted); }
+
+        /* شاشة الدرس والشرح المفصل */
+        #lesson-view { display: none; }
+        .back-btn {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: var(--text-main);
+            cursor: pointer;
+            margin-bottom: 14px;
+        }
+        .content-box {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 22px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .story-explain {
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 16px;
+            border-right: 4px solid var(--accent);
+            line-height: 1.85;
+            font-size: 15px;
+            color: #334155;
+            margin: 15px 0;
+        }
+        /* صندوق المصطلحات المخصص للامتحان */
+        .exam-box {
+            background: var(--exam-box-bg);
+            border: 2px dashed var(--exam-border);
+            padding: 16px;
+            border-radius: 16px;
+            margin: 18px 0;
+        }
+        .exam-box h4 { margin: 0 0 8px; color: #1d4ed8; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+        .exam-box p { margin: 0; font-size: 14px; line-height: 1.7; color: #1e3a8a; font-weight: 600; }
+
+        .quiz-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            padding: 16px;
+            border-radius: 16px;
+            margin-top: 18px;
+        }
+        .quiz-card h4 { margin: 0 0 12px; color: #b45309; font-size: 15px; }
+        .opt-btn {
             display: block;
             width: 100%;
-            padding: 12px 15px;
-            margin: 10px 0;
-            background: #0f172a;
-            color: #fff;
-            border: 2px solid #334155;
-            border-radius: 10px;
+            padding: 13px;
+            margin-bottom: 8px;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
             text-align: right;
-            font-size: 16px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .option-btn:hover { border-color: var(--accent); }
-        .option-btn.correct { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: #4ade80; }
-        .option-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: #f87171; }
-        
-        .btn-back {
-            background: transparent;
-            color: var(--secondary-text);
-            border: 1px solid #334155;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 15px;
+        .opt-btn.correct { background: #d1fae5; border-color: var(--success); color: #065f46; }
+        .opt-btn.wrong { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
+
+        /* شريط التنقل السفلي */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #e2e8f0;
+            z-index: 500;
         }
-        .btn-back:hover { color: #fff; border-color: #fff; }
+        .nav-tab { text-align: center; font-size: 11px; color: var(--text-muted); cursor: pointer; }
+        .nav-tab.active { color: var(--accent); font-weight: bold; }
+        .nav-tab span { display: block; font-size: 20px; margin-bottom: 2px; }
     </style>
 </head>
 <body>
 
-    <!-- شاشة القفل -->
+    <!-- شاشة القفل وتحديد المدة -->
     <div id="lock-screen">
         <div class="lock-box">
-            <div style="font-size: 40px; margin-bottom: 10px;">🔐</div>
-            <h2>بوابة أكاديمية العلوم</h2>
-            <p>أدخل الكود الموحد لتشغيل منهج الترم الأول بالكامل لمدة 30 يوم.</p>
-            <input type="password" inputmode="numeric" id="code-input" class="lock-input" placeholder="••••••••••••••">
-            <button class="btn-activate" onclick="activateApp()">دخول المغامرة 🚀</button>
-            <div id="error-msg">❌ الكود غلط! يا ريت تركز وتكتبه صح.</div>
+            <div style="font-size: 42px;">🔐</div>
+            <h2>أكاديمية العلوم</h2>
+            <p>أدخل كود التشغيل وحدد مدة اشتراك التطبيق</p>
+            
+            <div class="input-group">
+                <label>كود التفعيل السري:</label>
+                <input type="password" inputmode="numeric" id="code-input" class="lock-input" placeholder="••••••••••••••">
+            </div>
+
+            <div class="input-group">
+                <label>مدة التشغيل:</label>
+                <div class="duration-row">
+                    <input type="number" id="duration-val" class="lock-input" value="30" min="1">
+                    <select id="duration-unit">
+                        <option value="days">أيام</option>
+                        <option value="hours">ساعات</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-activate" onclick="unlockApp()">تشغيل التطبيق 🚀</button>
+            <div id="error-msg">❌ الكود غلط أو المدة غير صحيحة!</div>
         </div>
     </div>
 
+    <!-- الهيدر العلوي -->
+    <div class="top-header">
+        <div class="brand">
+            <div class="brand-avatar">ع</div>
+            <div class="brand-info">
+                <h1>أكاديمية العلوم</h1>
+                <span>العب واتعلم وصحح مفاهيمك</span>
+            </div>
+        </div>
+        <div class="timer-pill" id="timer-display">⏳ جاري الحساب...</div>
+    </div>
+
     <div class="container">
-        <div class="game-header">
-            <div>⭐ رصيد النجوم: <span id="total-stars" class="stars-display">0</span> نجمة</div>
-            <div id="sub-timer" style="font-size: 12px; color: var(--secondary-text);">اشتراك نشط</div>
+        <!-- الواجهة الرئيسية -->
+        <div id="home-view">
+            <div class="hero-card">
+                <h2>مساء الخير يا بطل 👋</h2>
+                <p>شرح بالعامية يفهمك الدرس، ومصطلحات علمية تخلليك تقفل الامتحان!</p>
+                <div class="hero-next-btn" onclick="openLesson('u1_l1')">
+                    <span>🚀 ابدأ: حالات المادة وسلوكها</span>
+                    <span>⬅</span>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-box">
+                    <span id="stars-count">0 ⭐</span>
+                    <small>رصيد النجوم</small>
+                </div>
+                <div class="stat-box">
+                    <span id="completed-count">0 / 6</span>
+                    <small>دروس ختمتها</small>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3>📚 وحدات المنهج الدراسي</h3>
+            </div>
+
+            <div id="lessons-list"></div>
         </div>
 
-        <div id="main-dashboard">
-            <header>
-                <h1>🧪 الأكاديمية الشاملة للعلوم - ثانية إعدادي</h1>
-                <p>كل المنهج بالعامية والنجوم.. العب وتعلم صح!</p>
-            </header>
+        <!-- شاشة الدرس -->
+        <div id="lesson-view">
+            <button class="back-btn" onclick="goHome()">⬅ رجوع للرئيسية</button>
+            <div class="content-box">
+                <h2 id="l-title" style="margin-top:0; color:var(--accent); font-size:19px;"></h2>
+                
+                <!-- شرح بالعامية ودمه خفيف -->
+                <div class="story-explain" id="l-story"></div>
+                
+                <!-- الخلاصة والمصطلحات للامتحان -->
+                <div class="exam-box">
+                    <h4>🎯 خلاصة الامتحان (احفظ دي عشان تجاوب صح):</h4>
+                    <p id="l-exam-def"></p>
+                </div>
 
-            <div class="units-grid">
-                <div class="card" onclick="openLesson('u1_l1')">
-                    <h3>🧊 الوحدة 1 - الدرس 1: حالات المادة وسلوكها</h3>
-                    <p>الصلب والسائل والغاز، الموائع، والحركة البراونية وجسيمات المادة.</p>
-                </div>
-                <div class="card" onclick="openLesson('u1_l2')">
-                    <h3>🔥 الوحدة 1 - الدرس 2: تغير حالات المادة</h3>
-                    <p>الانصهار، الغليان، التسامي، القدر الكاتم، وعوامل التبخر.</p>
-                </div>
-                <div class="card" onclick="openLesson('u2_l1')">
-                    <h3>⚡ الوحدة 2 - الدرس 1: التفاعلات الكيميائية</h3>
-                    <p>إزاي المواد بتتغير وتكون مواد جديدة، واحتراق السكر وصناعة الصابون.</p>
-                </div>
-                <div class="card" onclick="openLesson('u2_l2')">
-                    <h3>⚖️ الوحدة 2 - الدرس 2: المعادلة الكيميائية الموزونة</h3>
-                    <p>قانون بقاء الكتلة (أنطوان لافوازييه)، وإزاي نوزن المعادلات بكل سهولة.</p>
-                </div>
-                <div class="card" onclick="openLesson('u3_l1')">
-                    <h3>🌿 الوحدة 3 - الدرس 1: عملية البناء الضوئي</h3>
-                    <p>البلاستيدات الخضراء، الكلوروفيل، التفاعلات الضوئية واللاضوئية.</p>
-                </div>
-                <div class="card" onclick="openLesson('u4_l1')">
-                    <h3>🌍 الوحدة 4 - الدرس 1: تغير سطح الأرض</h3>
-                    <p>الانجراف القاري، الصفائح التكتونية، الزلازل، البراكين، والنيازك.</p>
+                <div class="quiz-card">
+                    <h4 id="l-question"></h4>
+                    <div id="l-options"></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- شاشة اللعبة والدرس -->
-        <div id="game-screen">
-            <button class="btn-back" onclick="backToDashboard()">⬅ رجوع للرئيسية</button>
-            <h2 id="lesson-title" style="color: var(--accent); margin-top: 0;"></h2>
-            <div class="lesson-text" id="lesson-content"></div>
-            
-            <div class="question-box">
-                <h3 id="question-text"></h3>
-                <div id="options-container"></div>
-            </div>
-        </div>
+    <!-- شريط التنقل السفلي -->
+    <div class="bottom-nav">
+        <div class="nav-tab active" onclick="goHome()"><span>🏠</span>الرئيسية</div>
+        <div class="nav-tab" onclick="openRandomQuiz()"><span>⚡</span>اختبار سريع</div>
+        <div class="nav-tab" onclick="resetLockNow()"><span>🔒</span>قفل التطبيق</div>
     </div>
 
     <script>
         const MASTER_CODE = "28606183300114";
-        const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
-        let userStars = parseInt(localStorage.getItem("sci_stars") || "0");
-        document.getElementById("total-stars").innerText = userStars;
 
-        // قاعدة بيانات كاملة ومبسطة بالعامية لدروس المنهج
-        const curriculum = {
-            'u1_l1': {
-                title: "🧊 الوحدة 1 - الدرس 1: حالات المادة وسلوكها",
-                text: "المادة هي كل ما له كتلة ويشغل حيز. عندنا 3 حالات أساسية: صلبة (جزيئاتها ماسكة ببعض بقوة وشكلها ثابت)، سائلة (حرة أكتر وبتتخذ شكل الإناء)، وغازية (جزيئاتها طايرة في كل حتة وقابلة للانضغاط). السوائل والغازات بنسميهم 'موائع' لأنهم بينسابوا!",
-                question: "سؤال التحدي: مادتين بيتشابهوا في قابلية الانسياب وأخدان شكل الإناء الحاوي لهم، بنصنفهم في مجموعة واحدة اسمها إيه؟",
+        const lessonsData = [
+            {
+                id: 'u1_l1',
+                icon: '🧊',
+                title: 'حالات المادة وسلوكها',
+                subtitle: 'الصلب والسائل والغاز وحركة الجزيئات',
+                story: `بص يا بطل، بالبلدي كده أي حاجة حوالينا ليها كتلة وبتاخد مكان بنسميها "مادة". والمادة دي متكونة من جسيمات صغيرة أوي (جزيئات) في حالة حركة مستمرة.\n\n• في المادة الصلبة: الجزيئات لازقة في بعضها بقوة ومسافات تكاد تكون منعدمة، فعشان كده شكلها وحجمها ثابت.\n• في المادة السائلة: الجزيئات المسافات بينها أكبر شوية فبتتحرك بحرية وتتزحلق وتاخد شكل الإناء الحاوي لها.\n• في المادة الغازية: الجزيئات طايرة في كل حتة والمسافات بينها كبيرة جداً.\n\nوتذكر دايماً: السوائل والغازات بنسميهم مع بعض "الموائع" لأنهم بيقدروا ينسابوا بكل سهولة!`,
+                examDef: '• المادة: كل ما له كتلة و حجم (يشغل حيزاً من الفراغ).\n• الموائع: مواد تتصف بخاصية الانسياب ولا تأخذ شكلاً ثابتاً (وتشمل السوائل والغازات).',
+                question: 'سؤال الامتحان: أي من المواد التالية تعتبر من "الموائع"؟',
                 options: [
-                    { text: "المعادن الصلبة", correct: false },
-                    { text: "الموائع (السوائل والغازات)", correct: true },
-                    { text: "البلورات", correct: false }
+                    { text: 'الحديد والخشب', correct: false },
+                    { text: 'الماء والهواء', correct: true },
+                    { text: 'الثلج والزجاج', correct: false }
                 ]
             },
-            'u1_l2': {
-                title: "🔥 الوحدة 1 - الدرس 2: تغير حالات المادة",
-                text: "لما المادة تكتسب طاقة حرارية بتتحول من صلب لسائل (انصهار) ومن سائل لغاز (تبخر أو غليان). والعمليات دي 'انعكاسية'! أما التحول من صلب لغاز مباشرة من غير سائل فبنسميه 'التسامي' زي الثلج الجاف.",
-                question: "سؤال التحدي: تحول المادة من الحالة الصلبة إلى الحالة الغازية مباشرة دون المرور بالحالة السائلة يسمى:",
+            {
+                id: 'u1_l2',
+                icon: '🔥',
+                title: 'تغير حالات المادة والتسامي',
+                subtitle: 'الانصهار، الغليان، وسر الثلج الجاف',
+                story: `تخيل معاك حتة ثلج وسخنتها، الحرارة بتخلي الجزيئات تجري وتبعد عن بعضها لحد ما تسيح وتبقى مية (ودي اسمها انصهار)! ولو غليت المية بتطير كبخار (ودي اسمها تبخر).\n\nلكن العجيبة بقى هي "التسامي": ودي لما مادة صلبة تتحول لغاز علطول من غير ما تعدي على الحالة السائلة أصلاً، زي النفتالين اللي بنحطه في الهدوم أو الثلج الجاف!`,
+                examDef: '• الانصهار: تحول المادة من الحالة الصلبة إلى الحالة السائلة بالتسخين.\n• التسامي: تحول المادة من الحالة الصلبة إلى الحالة الغازية مباشرة دون المرور بالحالة السائلة.',
+                question: 'سؤال الامتحان: تحول المادة الصلبة إلى حالة غازية مباشرة دون مرور بالسائلة يسمى في علم الكيمياء:',
                 options: [
-                    { text: "التسامي", correct: true },
-                    { text: "التكثف", correct: false },
-                    { text: "التجمد", correct: false }
+                    { text: 'التسامي', correct: true },
+                    { text: 'التكثف', correct: false },
+                    { text: 'التجمد', correct: false }
                 ]
             },
-            'u2_l1': {
-                title: "⚡ الوحدة 2 - الدرس 1: التفاعلات الكيميائية",
-                text: "التفاعل الكيميائي هو كسر روابط بين جزيئات المتفاعلات وتكوين روابط جديدة في النواتج عشان نعمل مواد جديدة خالص بخواص جديدة (زي احتراق السكر وزي تفاعل الزيت مع الصودا الكاوية عشان نعمل صابون!).",
-                question: "سؤال التحدي: تفاعل زيت الطعام مع محلول الصودا الكاوية (هيدروكسيد الصوديوم) بينتج عنه مادة جديدة مفيدة وهي:",
+            {
+                id: 'u2_l1',
+                icon: '🧪',
+                title: 'التفاعلات الكيميائية في حياتنا',
+                subtitle: 'إزاي بنعمل مواد جديدة زي الصابون؟',
+                story: `التفاعل الكيميائي عامل زي لما تفك لعب LEGO وتكون بيها شكل جديد خالص! بنكسر الروابط القديمة بين جزيئات المواد المتفاعلة ونعمل روابط جديدة تطلع لنا مواد بصفات تانية خالص.\n\nمثلاً في البيت: لو جبنا زيت مع محلول الصودا الكاوية وقلبناهم، بيحصل تفاعل بيدينا "صابون" بنغسل بيه إيدينا!`,
+                examDef: '• التفاعل الكيميائي: هو كسر الروابط الموجودة في جزيئات مواد التفاعل وتكوين روابط جديدة في جزيئات مواد النواتج.',
+                question: 'سؤال الامتحان العلمي الدقيق: كسر الروابط في المواد المتفاعلة وتكوين روابط جديدة في النواتج يُعرف بـ:',
                 options: [
-                    { text: "البلاستيك", correct: false },
-                    { text: "الصابون", correct: true },
-                    { text: "الحديد", correct: false }
+                    { text: 'التفاعل الكيميائي', correct: true },
+                    { text: 'التغير الفيزيائي البحت', correct: false },
+                    { text: 'عملية الانصهار', correct: false }
                 ]
             },
-            'u2_l2': {
-                title: "⚖️ الوحدة 2 - الدرس 2: المعادلة الكيميائية الموزونة",
-                text: "المعادلة الكيميائية لازم تكون 'موزونة' عشان نحقق قانون بقاء الكتلة (المادة لا تفنى ولا تستحدث من العدم). عدد ذرات كل عنصر في المتفاعلات لازم يساوي تماماً عدد ذراته في النواتج.",
-                question: "سؤال التحدي: العالم الفرنسي الذي يُقبّب بأبو الكيمياء وصاغ قانون بقاء الكتلة هو:",
+            {
+                id: 'u2_l2',
+                icon: '⚖️',
+                title: 'وزن المعادلة وبقاء الكتلة',
+                subtitle: 'مفيش ذرة بتضيع في الكيمياء!',
+                story: `الكيمياء ناس منضبطة جداً وما بيحبوش الفوضى! العالم الفرنسي العظيم (لافوازييه) حط قانون اسمه "بقاة الكتلة" وبيقولك بالبلدي: المادة لا تفنى ولا تستحدث من العدم.\n\nيعني بالظبط كده: عدد ذرات أي عنصر داخلة في التفاعل لازم تساوي عدد ذرات نفس العنصر الخارجة منه، عشان كده بنحتاج "نوزن المعادلة".`,
+                examDef: '• قانون بقاء الكتلة: مجموع كتل المواد المتفاعلة في أي تفاعل كيميائي يساوي مجموع كتل المواد الناتجة عنه.',
+                question: 'سؤال الامتحان: النص العلمي الذي ينص على أن "المجموع الكلي لكتل المواد المتفاعلة يساوي مجموع كتل النواتج" يمثل قانون:',
                 options: [
-                    { text: "أنطوان لافوازييه", correct: true },
-                    { text: "أينشتاين", correct: false },
-                    { text: "براون", correct: false }
+                    { text: 'بقاء الكتلة', correct: true },
+                    { text: 'الجذب العام', correct: false },
+                    { text: 'انعكاس الضوء', correct: false }
                 ]
             },
-            'u3_l1': {
-                title: "🌿 الوحدة 3 - الدرس 1: عملية البناء الضوئي",
-                text: "النبات بيصنع غذاءه بنفسه جوه عُضيات اسمها 'البلاستيدات الخضراء' اللي فيها صبغ 'الكلوروفيل'. التفاعلات الضوئية بتحصل في الجرانا وتفك المية، واللاضوئية بتحصل في الستروما وتدمج هيدروجين المية مع ثاني أكسيد الكربون عشان تطلع سكر الجلوكوز والنشا!",
-                question: "سؤال التحدي: المكان اللي بتتم فيه تفاعلات البناء الضوئي المستقلة عن الضوء (اللاضوئية) داخل البلاستيدة هو:",
+            {
+                id: 'u3_l1',
+                icon: '🌿',
+                title: 'مطبخ النبات (البناء الضوئي)',
+                subtitle: 'الجرانا والستروما وصناعة الغذاء',
+                story: `النبات عنده مصنع سحري جوه أوراقه اسمه "البلاستيدات الخضراء". المصنع ده فيه شقين:\n1. تفاعلات ضوئية: بتحصل في حتة اسمها (الجرانا) وبتاخد طاقة الشمس عشان تكسر المية وتطلع أكسجين.\n2. تفاعلات لاضوئية: بتحصل جوه حتة اسمها (الستروما) ومش محتاجة شمس، وفيها النبات بيطبخ ثاني أكسيد الكربون عشان يطلع السكر اللي بياكله.`,
+                examDef: '• البلاستيدات الخضراء: عضيات خلية النبات التي تحتوي على الكلوروفيل وتتم فيها عملية البناء الضوئي.\n• الستروما: السائل أو الحشوة الداخلية التي تحدث فيها التفاعلات اللاضوئية.',
+                question: 'سؤال الامتحان: المكان الذي تحدث فيه التفاعلات اللاضوئية لعملية البناء الضوئي داخل البلاستيدة الخضراء هو:',
                 options: [
-                    { text: "الجرانا", correct: false },
-                    { text: "الستروما (الحشوة)", correct: true },
-                    { text: "الغشاء الخارجي", correct: false }
+                    { text: 'الستروما', correct: true },
+                    { text: 'الجرانا', correct: false },
+                    { text: 'الغشاء الخارجي', correct: false }
                 ]
             },
-            'u4_l1': {
-                title: "🌍 الوحدة 4 - الدرس 1: تغير سطح الأرض",
-                text: "حسب نظرية الصفائح التكتونية، قشرة الأرض متقسمة لصفائح بتتحرك فوق طبقة الماجما (الأسينوسفير) بحركة تباعدية أو تقاربية أو تطاحنية. الحركات دي هي اللي بتسبب الزلازل والبراكين وتكوين الجبال!",
-                question: "سؤال التحدي: تباعد صفيحتين قاريتين عن بعضهما بفعل تيارات الحمل الصاعدة يؤدي إلى نشأة مثل:",
+            {
+                id: 'u4_l1',
+                icon: '🌍',
+                title: 'حركة الأرض والصفائح التكتونية',
+                subtitle: 'سر الزلازل وتكون البحر الأحمر',
+                story: `قشرة الأرض مش حتة واحدة، دي متقسمة لقطع عملاقة اسمها "الصفائح التكتونية" وبتعوم فوق الصهارة المشتعلة.\n\n• لو صفيحتين بعدوا عن بعض (تباعدية): بيتولد شق واسع تتملي مية وتعمل بحر جديد زي "البحر الأحمر".\n• لو خبطوا في بعض (تقاربية): الأرض بتترفع وتعمل سلاسل جبال ضخمة.`,
+                examDef: '• الصفائح التكتونية: قطع ضخمة ومتقطعة تشكل الغلاف الصخري للأرض وتتحرك ببطء فوق الستارينوسفير.',
+                question: 'سؤال الامتحان: حركة تباعد صفيحتين قاريتين عن بعضهما تؤدي إلى تكون معالم جغرافية مثل:',
                 options: [
-                    { text: "البحر الأحمر", correct: true },
-                    { text: "جبال الهيمالايا", correct: false },
-                    { text: "صدع سان أندرياس", correct: false }
+                    { text: 'تكون البحر الأحمر', correct: true },
+                    { text: 'جبال الهيمالايا', correct: false },
+                    { text: 'الأخدود العظيم', correct: false }
                 ]
             }
-        };
+        ];
+
+        let userStars = parseInt(localStorage.getItem('sci_stars') || '0');
+        let completedLessons = JSON.parse(localStorage.getItem('sci_completed') || '[]');
 
         function checkSubscription() {
-            const expiry = localStorage.getItem("sci_sub_expiry");
+            const expiry = localStorage.getItem('sci_expiry');
             const now = Date.now();
+            const timerEl = document.getElementById('timer-display');
+
             if (expiry && now < parseInt(expiry)) {
-                document.getElementById("lock-screen").style.display = "none";
-                const daysLeft = Math.ceil((parseInt(expiry) - now) / (1000 * 60 * 60 * 24));
-                document.getElementById("sub-timer").innerText = `✅ متبقي ${daysLeft} يوم`;
+                document.getElementById('lock-screen').style.display = 'none';
+                const diff = parseInt(expiry) - now;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                if (days > 0) {
+                    timerEl.innerText = `⏳ باقي ${days} يوم و ${hours} س`;
+                } else if (hours > 0) {
+                    timerEl.innerText = `⏳ باقي ${hours} ساعة و ${mins} د`;
+                } else {
+                    timerEl.innerText = `⏳ باقي ${mins} دقيقة`;
+                }
             } else {
-                document.getElementById("lock-screen").style.display = "flex";
+                localStorage.removeItem('sci_expiry');
+                document.getElementById('lock-screen').style.display = 'flex';
+                timerEl.innerText = '🔒 منتهي';
             }
         }
 
-        function activateApp() {
-            const input = document.getElementById("code-input").value.trim();
-            const errorMsg = document.getElementById("error-msg");
-            if (input === MASTER_CODE) {
-                localStorage.setItem("sci_sub_expiry", Date.now() + THIRTY_DAYS_MS);
-                errorMsg.style.display = "none";
+        function unlockApp() {
+            const code = document.getElementById('code-input').value.trim();
+            const val = parseInt(document.getElementById('duration-val').value);
+            const unit = document.getElementById('duration-unit').value;
+            const err = document.getElementById('error-msg');
+
+            if (code === MASTER_CODE && val > 0) {
+                const ms = unit === 'days' ? val * 24 * 60 * 60 * 1000 : val * 60 * 60 * 1000;
+                localStorage.setItem('sci_expiry', Date.now() + ms);
+                err.style.display = 'none';
+                document.getElementById('code-input').value = '';
                 checkSubscription();
             } else {
-                errorMsg.style.display = "block";
+                err.style.display = 'block';
             }
         }
 
-        function openLesson(lessonKey) {
-            const lesson = curriculum[lessonKey];
-            document.getElementById("main-dashboard").style.display = "none";
-            document.getElementById("game-screen").style.display = "block";
-            document.getElementById("lesson-title").innerText = lesson.title;
-            document.getElementById("lesson-content").innerText = lesson.text;
-            document.getElementById("question-text").innerText = lesson.question;
+        function resetLockNow() {
+            if(confirm('عايز تقفل التطبيق وتخرج لشاشة الكود دلوقتي؟')) {
+                localStorage.removeItem('sci_expiry');
+                checkSubscription();
+            }
+        }
 
-            const optContainer = document.getElementById("options-container");
-            optContainer.innerHTML = "";
-
-            lesson.options.forEach(opt => {
-                const btn = document.createElement("button");
-                btn.className = "option-btn";
-                btn.innerText = opt.text;
-                btn.onclick = () => checkAnswer(btn, opt.correct);
-                optContainer.appendChild(btn);
+        function renderDashboard() {
+            document.getElementById('stars-count').innerText = `${userStars} ⭐`;
+            document.getElementById('completed-count').innerText = `${completedLessons.length} / ${lessonsData.length}`;
+            
+            const list = document.getElementById('lessons-list');
+            list.innerHTML = '';
+            lessonsData.forEach(lesson => {
+                const isDone = completedLessons.includes(lesson.id);
+                const card = document.createElement('div');
+                card.className = 'lesson-card';
+                card.onclick = () => openLesson(lesson.id);
+                card.innerHTML = `
+                    <div class="lesson-icon">${lesson.icon}</div>
+                    <div class="lesson-details">
+                        <h4>${lesson.title} ${isDone ? '✅' : ''}</h4>
+                        <p>${lesson.subtitle}</p>
+                    </div>
+                    <div style="color:var(--accent); font-weight:bold;">⬅</div>
+                `;
+                list.appendChild(card);
             });
         }
 
-        function checkAnswer(btn, isCorrect) {
-            const buttons = document.querySelectorAll(".option-btn");
-            buttons.forEach(b => b.style.pointerEvents = "none");
+        function openLesson(id) {
+            const lesson = lessonsData.find(l => l.id === id);
+            if (!lesson) return;
+
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('lesson-view').style.display = 'block';
+            document.getElementById('l-title').innerText = `${lesson.icon} ${lesson.title}`;
+            document.getElementById('l-story').innerText = lesson.story;
+            document.getElementById('l-exam-def').innerText = lesson.examDef;
+            document.getElementById('l-question').innerText = lesson.question;
+
+            const optBox = document.getElementById('l-options');
+            optBox.innerHTML = '';
+            lesson.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerText = opt.text;
+                btn.onclick = () => handleAnswer(btn, opt.correct, lesson.id);
+                optBox.appendChild(btn);
+            });
+            window.scrollTo(0, 0);
+        }
+
+        function handleAnswer(btn, isCorrect, lessonId) {
+            const allBtns = document.querySelectorAll('.opt-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none');
 
             if (isCorrect) {
-                btn.classList.add("correct");
-                userStars += 10;
-                localStorage.setItem("sci_stars", userStars);
-                document.getElementById("total-stars").innerText = userStars;
+                btn.classList.add('correct');
+                if (!completedLessons.includes(lessonId)) {
+                    completedLessons.push(lessonId);
+                    userStars += 10;
+                    localStorage.setItem('sci_completed', JSON.stringify(completedLessons));
+                    localStorage.setItem('sci_stars', userStars);
+                }
                 setTimeout(() => {
-                    alert("🎉 عاش يا بطل! إجابة صحيحة وكسبت 10 نجوم ⭐");
-                    backToDashboard();
-                }, 500);
+                    alert('🎉 برافو يا بطل! إجابة ممتازة وكسبت 10 نجوم ⭐');
+                    goHome();
+                }, 400);
             } else {
-                btn.classList.add("wrong");
+                btn.classList.add('wrong');
                 setTimeout(() => {
-                    alert("❌ معلش يا وحش، إجابة خاطئة! جرب تاني في درس تاني.");
-                    backToDashboard();
+                    alert('❌ ركز في خلاصة الامتحان فوق وجرب تاني يا وحش!');
+                    allBtns.forEach(b => {
+                        b.style.pointerEvents = 'auto';
+                        b.classList.remove('wrong');
+                    });
                 }, 500);
             }
         }
 
-        function backToDashboard() {
-            document.getElementById("game-screen").style.display = "none";
-            document.getElementById("main-dashboard").style.display = "block";
+        function goHome() {
+            document.getElementById('lesson-view').style.display = 'none';
+            document.getElementById('home-view').style.display = 'block';
+            renderDashboard();
+        }
+
+        function openRandomQuiz() {
+            const randomLesson = lessonsData[Math.floor(Math.random() * lessonsData.length)];
+            openLesson(randomLesson.id);
         }
 
         checkSubscription();
+        renderDashboard();
+        setInterval(checkSubscription, 30000);
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
