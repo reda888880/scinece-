@@ -1,889 +1,224 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-app="BONZO" data-version="1.0-preview">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية العلوم - كبسولة ثانية إعدادي</title>
-    <link rel="manifest" href="manifest.json">
-    <style>
-        :root {
-            --bg-color: #f4f6fb;
-            --card-bg: #ffffff;
-            --accent: #6366f1;
-            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --exam-bg: #eff6ff;
-            --exam-border: #3b82f6;
-        }
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 0; padding-bottom: 90px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101b3d">
+<meta name="description" content="BONZO — تجربة تعليمية تفاعلية لمادة العلوم للصف الثاني الإعدادي.">
+<meta name="color-scheme" content="light">
+<title>BONZO | بونزو... كبسولة في جيبك</title>
+<style>
+:root{--navy:#101b3d;--navy2:#182957;--blue:#3978f6;--purple:#7857e8;--yellow:#ffd45b;--orange:#ff9852;--ink:#17213c;--muted:#71809e;--paper:#f4f7ff;--white:#fff;--green:#1aa879;--red:#e45b68}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+button{font:inherit;cursor:pointer;border:0} .app{max-width:480px;min-height:100vh;margin:auto;background:#f7f8fc;position:relative;overflow:hidden;box-shadow:0 0 40px #14234a18}
+.top{background:linear-gradient(145deg,var(--navy),#253c78);color:white;padding:20px 20px 28px;border-radius:0 0 28px 28px}
+.topline{display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px}
+.logo{width:46px;height:30px;border:2px solid #a9c9ff;border-radius:30px;background:linear-gradient(90deg,#6e61e9aa,#54c9f0aa);display:grid;place-items:center;box-shadow:inset 0 0 10px #fff8,0 4px 14px #0003;color:white;font-weight:bold}
+.brand b{font-size:23px;letter-spacing:1px}.tagline{font-size:10px;color:#cbd8ff;margin-top:2px}
+.avatar{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,var(--yellow),var(--orange));display:grid;place-items:center;font-size:23px}
+.hello{margin-top:25px}.hello small{color:#c5d4ff}.hello h1{font-size:23px;margin:7px 0}.hello p{font-size:13px;color:#dce5ff;margin:0;line-height:1.7}
+.content{padding:18px 16px 35px}.section-head{display:flex;justify-content:space-between;align-items:center;margin:8px 2px 12px}.section-head h2{font-size:17px;margin:0}.muted{color:var(--muted);font-size:11px}
+.progress{background:#e6ebf8;border-radius:20px;height:8px;overflow:hidden;margin-top:10px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));width:0%;transition:.3s}
+.subjects{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.subject{padding:16px;border-radius:19px;background:white;text-align:right;box-shadow:0 5px 18px #24396b0c;border:1px solid #edf0f8;min-height:112px}
+.subject .ico{font-size:25px}.subject b{display:block;margin-top:9px;font-size:15px}.subject small{color:var(--muted);font-size:11px}
+.subject.active{border:1.5px solid #b9caff;background:linear-gradient(145deg,#fff,#f0f4ff)}
+.panel{background:white;border:1px solid #edf0f8;border-radius:20px;padding:16px;margin-top:14px;box-shadow:0 5px 18px #24396b0a}
+.bonzo-tip{display:flex;gap:12px;align-items:center;background:#fff7df;border:1px solid #ffebae;border-radius:18px;padding:13px;margin-top:16px}
+.bonzo-face{font-size:30px}.bonzo-tip b{font-size:13px}.bonzo-tip p{font-size:11px;line-height:1.7;margin:4px 0 0;color:#6c5b2b}
+.btn{padding:12px 16px;border-radius:13px;font-weight:bold;font-size:13px;background:var(--blue);color:white;box-shadow:0 5px 12px #3978f633}
+.btn.secondary{background:#edf2ff;color:#3159b4;box-shadow:none}.btn.purple{background:var(--purple);box-shadow:0 5px 12px #7857e833}.btn.full{width:100%;margin-top:12px}
+.back{background:#ffffff20;color:white;border-radius:12px;padding:8px 12px}
+.unit-card,.lesson-card{background:white;border:1px solid #edf0f8;border-radius:17px;padding:14px;margin-bottom:10px}
+.unit-card{display:flex;align-items:center;gap:12px}.unit-icon{width:43px;height:43px;border-radius:14px;background:#edf2ff;display:grid;place-items:center;font-size:21px}
+.unit-card .grow,.lesson-card .grow{flex:1}.unit-card b,.lesson-card b{font-size:13px}.unit-card small,.lesson-card small{display:block;color:var(--muted);font-size:10px;margin-top:5px}
+.arrow{color:#9aa8c3;font-size:20px}
+.pill{font-size:10px;border-radius:20px;padding:5px 9px;background:#eef2ff;color:#4566b4;white-space:nowrap}
+.lesson-card{display:flex;align-items:center;gap:10px}.lesson-num{width:30px;height:30px;border-radius:10px;background:#fff1df;color:#c36b22;display:grid;place-items:center;font-weight:bold;font-size:12px}
+.screen-title{font-size:20px;margin:0 0 6px}.screen-sub{font-size:12px;color:var(--muted);line-height:1.7;margin:0 0 16px}
+.tabs{display:flex;gap:7px;overflow:auto;padding-bottom:8px;margin-bottom:12px}.tab{white-space:nowrap;background:#edf1fa;color:#5d6b88;border-radius:20px;padding:9px 12px;font-size:11px}.tab.active{background:var(--navy);color:white}
+.lesson-body{font-size:13px;line-height:2.05;color:#34415f}.lesson-body h3{color:var(--navy);font-size:15px;margin:17px 0 6px}.lesson-body ul{padding-right:20px}
+.callout{background:#eff5ff;border-right:4px solid var(--blue);padding:12px;border-radius:12px;margin:12px 0;font-size:12px;line-height:1.9}
+.story{background:#f4efff;border-right:4px solid var(--purple);padding:13px;border-radius:12px;font-size:12px;line-height:1.9}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.quiz-q{font-size:15px;line-height:1.8;font-weight:bold;margin:8px 0 15px}.option{display:block;width:100%;text-align:right;padding:13px;border:1px solid #e5eaf5;background:white;border-radius:13px;margin:8px 0;font-size:13px;color:var(--ink)}
+.option.selected{border-color:var(--blue);background:#eff4ff}.option.correct{border-color:var(--green);background:#eafaf4}.option.wrong{border-color:var(--red);background:#fff0f1}
+.feedback{padding:12px;border-radius:12px;font-size:12px;line-height:1.8;margin-top:12px;background:#f2f5fb}
+.result{text-align:center;padding:22px 10px}.result .medal{font-size:55px}.result h2{font-size:22px}.score{font-size:38px;font-weight:bold;color:var(--purple)}
+.bottom{position:sticky;bottom:0;background:#ffffffed;backdrop-filter:blur(10px);border-top:1px solid #edf0f8;display:flex;justify-content:space-around;padding:11px 5px;color:#7885a0;font-size:10px}
+.bottom button{background:none;color:inherit;display:grid;gap:4px;justify-items:center}.bottom span{font-size:18px}
+.hidden{display:none!important}
+@media(min-width:481px){body{padding:18px 0}.app{border-radius:26px;min-height:calc(100vh - 36px)}}
 
-        /* شاشة البداية (Splash Screen) مع زر تخطي فوري */
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-            transition: opacity 0.4s ease;
-        }
-        .splash-logo { font-size: 40px; font-weight: 900; margin-bottom: 5px; }
-        .splash-sub { font-size: 15px; opacity: 0.9; margin-bottom: 30px; }
-        .skip-btn {
-            background: rgba(255, 255, 255, 0.25);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            padding: 12px 25px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .skip-btn:hover { background: rgba(255, 255, 255, 0.4); }
+.source-box{margin-top:14px;border:1px solid #dfe7f7;border-radius:14px;overflow:hidden;background:#fbfcff}
+.source-box summary{cursor:pointer;padding:13px;font-weight:bold;color:#284477;background:#f0f5ff;font-size:12px}
+.source-inner{padding:13px;font-size:12px;line-height:2;color:#34415f}
+.source-inner h4{font-size:13px;color:#172b55;margin:12px 0 5px}
+.source-inner ul,.source-inner ol{padding-right:20px;margin:5px 0}
+.source-meta{font-size:10px;color:#647493;margin-bottom:9px}
+.source-note{background:#fff7e5;border-right:3px solid #f0b944;padding:10px;border-radius:9px;margin:9px 0}
 
-        /* شاشة القفل */
-        #lock-screen {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.96);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 20px;
-        }
-        .lock-box {
-            background: #ffffff;
-            padding: 28px;
-            border-radius: 24px;
-            max-width: 380px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
-        }
-        .lock-box h2 { color: var(--accent); margin: 10px 0 5px; }
-        .lock-box p { color: var(--text-muted); font-size: 13px; margin-bottom: 18px; }
-        .input-group { margin-bottom: 12px; text-align: right; }
-        .input-group label { font-size: 12px; font-weight: bold; color: var(--text-main); display: block; margin-bottom: 5px; }
-        .lock-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
-            font-size: 18px;
-            text-align: center;
-            letter-spacing: 3px;
-        }
-        .duration-row { display: flex; gap: 10px; }
-        .duration-row input { width: 55%; letter-spacing: normal; font-size: 16px; }
-        .duration-row select {
-            width: 45%;
-            padding: 12px;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
-            font-size: 15px;
-            font-weight: bold;
-            color: var(--text-main);
-        }
-        .btn-activate {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 14px;
-            background: var(--accent-gradient);
-            color: #fff;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        #error-msg { color: var(--danger); font-size: 13px; margin-top: 10px; display: none; font-weight: bold; }
 
-        /* الهيدر */
-        .top-header {
-            background: #ffffff;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .brand { display: flex; align-items: center; gap: 10px; }
-        .brand-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: var(--accent-gradient);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .brand-info h1 { margin: 0; font-size: 16px; font-weight: 800; }
-        .brand-info span { font-size: 11px; color: var(--text-muted); display: block; }
-        .timer-pill {
-            background: #eef2ff;
-            color: var(--accent);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-        }
+/* BONZO v1.0 visual finish */
+:root{--paper:#f2f5fc;--ink:#182342;--muted:#71809e}
+body{background:radial-gradient(circle at 12% 8%,#e5ebff 0,transparent 27%),#edf1fa;min-height:100vh}
+.app{background:linear-gradient(180deg,#f8faff 0%,#f4f6fc 100%);box-shadow:0 24px 70px #15264a20}
+.top{padding:22px 20px 31px;background:radial-gradient(circle at 88% 0%,#5369bd55,transparent 34%),linear-gradient(145deg,#101b3d 0%,#1c2d60 58%,#342d75 100%)}
+.logo{width:54px;height:36px;border:2px solid #c4dcff;border-radius:30px;background:linear-gradient(110deg,#6f62e8cc,#56c9f0aa);font-size:17px;box-shadow:inset 0 0 13px #fff9,0 5px 18px #0004}
+.brand b{font-size:25px;letter-spacing:1.4px}.tagline{font-size:11px;color:#e2e9ff}
+.avatar{width:46px;height:46px;border:1px solid #ffffff55;box-shadow:0 5px 16px #0003}
+.hello h1{font-size:25px;line-height:1.35}.hello p{font-size:13px;max-width:340px}
+.content{padding:20px 16px 30px}.section-head{gap:8px}.section-head h2{font-size:18px}
+.subject,.panel,.unit-card,.lesson-card{box-shadow:0 8px 24px #2037670b;border-color:#e8edf8;transition:transform .18s ease,box-shadow .18s ease}
+.subject:active,.unit-card:active,.lesson-card:active,.btn:active{transform:scale(.985)}
+.subject{min-height:118px;border-radius:20px}.subject.active{border-color:#a9bfff;box-shadow:0 8px 24px #597fe51a}
+.panel{border-radius:21px;padding:17px}.bonzo-tip{box-shadow:0 6px 18px #d6a72a12}
+.btn{min-height:45px;border-radius:14px;font-size:13px}.btn:disabled{opacity:.48;cursor:not-allowed}
+.unit-card,.lesson-card{border-radius:18px;min-height:67px}.lesson-card{padding:14px 13px}
+.tab{padding:10px 15px}.tab:focus-visible,button:focus-visible{outline:3px solid #ffbd4a;outline-offset:2px}
+.lesson-body{font-size:13.5px;line-height:2.15}.lesson-body h3{margin-top:20px}
+.option{min-height:48px;border-radius:14px;transition:background .15s,border-color .15s}.option:disabled{cursor:default;opacity:1}
+.feedback{border:1px solid #e7ecf6}.bottom{z-index:5;box-shadow:0 -8px 24px #2037670b;padding-bottom:max(11px,env(safe-area-inset-bottom))}
+.source-box{border-radius:15px}.source-box summary{font-size:12px}.source-inner{font-size:12.5px}
+@media(min-width:481px){.app{max-width:500px;border:1px solid #e6ebf6}.content{padding-left:20px;padding-right:20px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 
-        .container { max-width: 600px; margin: 0 auto; padding: 16px; }
-
-        /* بطاقات الوحدات */
-        .unit-card {
-            background: #ffffff;
-            border-radius: 22px;
-            padding: 18px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
-        }
-        .unit-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f1f5f9;
-        }
-        .unit-title-box h3 { margin: 0; font-size: 16px; color: var(--text-main); }
-        .unit-title-box span { font-size: 12px; color: var(--text-muted); }
-        .unit-badge {
-            background: #eef2ff;
-            color: var(--accent);
-            padding: 5px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .lesson-tree-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 14px;
-            margin: 8px 0;
-            background: #f8fafc;
-            border-radius: 14px;
-            cursor: pointer;
-            border: 1px solid #e2e8f0;
-            transition: 0.2s;
-        }
-        .lesson-tree-item:hover { border-color: var(--accent); background: #f0fdf4; }
-        .lesson-tree-info h4 { margin: 0 0 3px; font-size: 14px; color: var(--text-main); }
-        .lesson-tree-info p { margin: 0; font-size: 11px; color: var(--text-muted); }
-        .check-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #fff;
-        }
-        .lesson-tree-item.done .check-icon { background: var(--success); }
-
-        .mindmap-btn {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            background: #fdf4ff;
-            color: #9333ea;
-            border: 1px dashed #c084fc;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            text-align: center;
-        }
-        .mindmap-btn:hover { background: #fae8ff; }
-
-        /* شاشة الدرس والشرح بالعامية المصرية */
-        #lesson-view { display: none; }
-        .back-btn {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-weight: bold;
-            color: var(--text-main);
-            cursor: pointer;
-            margin-bottom: 14px;
-        }
-        .content-box {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 22px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        }
-        .story-explain {
-            background: #f8fafc;
-            padding: 18px;
-            border-radius: 16px;
-            border-right: 4px solid var(--accent);
-            line-height: 1.95;
-            font-size: 15.5px;
-            color: #1e293b;
-            margin: 15px 0;
-            white-space: pre-line;
-        }
-        .exam-box {
-            background: var(--exam-bg);
-            border: 2px dashed var(--exam-border);
-            padding: 16px;
-            border-radius: 16px;
-            margin: 18px 0;
-        }
-        .exam-box h4 { margin: 0 0 8px; color: #1d4ed8; font-size: 15px; }
-        .exam-box p { margin: 0; font-size: 14px; line-height: 1.75; color: #1e3a8a; font-weight: 600; white-space: pre-line; }
-
-        .quiz-card {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            padding: 16px;
-            border-radius: 16px;
-            margin-top: 18px;
-        }
-        .quiz-card h4 { margin: 0 0 12px; color: #b45309; font-size: 15px; }
-        .opt-btn {
-            display: block;
-            width: 100%;
-            padding: 13px;
-            margin-bottom: 8px;
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            text-align: right;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .opt-btn.correct { background: #d1fae5; border-color: var(--success); color: #065f46; }
-        .opt-btn.wrong { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
-
-        /* الخريطة الذهنية البصرية المتفرعة */
-        #mindmap-view { display: none; }
-        .map-root {
-            background: var(--accent-gradient);
-            color: white;
-            padding: 16px;
-            border-radius: 18px;
-            text-align: center;
-            font-weight: 800;
-            font-size: 17px;
-            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.25);
-        }
-        .map-trunk {
-            width: 4px;
-            height: 20px;
-            background: var(--accent);
-            margin: 0 auto;
-        }
-        .map-card-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            border-right: 4px solid var(--accent);
-            padding-right: 16px;
-            margin-right: 12px;
-        }
-        .map-branch-node {
-            position: relative;
-            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-            border: 2px solid var(--accent);
-            padding: 16px;
-            border-radius: 16px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            transition: 0.2s;
-        }
-        .map-branch-node::before {
-            content: '';
-            position: absolute;
-            right: -20px;
-            top: 50%;
-            width: 18px;
-            height: 4px;
-            background: var(--accent);
-        }
-        .map-branch-node:hover { transform: scale(1.02); background: #e0e7ff; }
-        .map-branch-title { font-weight: bold; color: var(--accent); font-size: 15px; }
-        .map-branch-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-
-        /* التنقل السفلي */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            border-top: 1px solid #e2e8f0;
-            z-index: 500;
-        }
-        .nav-tab { text-align: center; font-size: 11px; color: var(--text-muted); cursor: pointer; }
-        .nav-tab.active { color: var(--accent); font-weight: bold; }
-        .nav-tab span { display: block; font-size: 20px; margin-bottom: 2px; }
-    </style>
+</style>
 </head>
 <body>
+<div class="app">
+<header class="top">
+ <div class="topline">
+  <div class="brand"><div class="logo">B</div><div><b>BONZO</b><div class="tagline">بونزو... كبسولة في جيبك</div></div></div>
+  <div class="avatar" aria-label="شخصية بونزو">🧑‍🚀</div>
+ </div>
+ <div class="hello"><small id="eyebrow">أهلاً يا بطل 👋</small><h1 id="heroTitle">المعرفة أقرب مما تتخيل</h1><p id="heroDesc">اتعلم، جرّب، العب، وخلّي كل درس خطوة جديدة لقدّام.</p></div>
+</header>
+<main class="content">
+ <section id="home">
+  <div class="section-head"><h2>مكتبتك التعليمية</h2><span class="muted">العلوم · 4 وحدات · 11 درسًا</span></div>
+  <div class="subjects">
+   <button class="subject active" onclick="openScience()"><span class="ico">🧪</span><b>العلوم</b><small>4 وحدات · 11 درس</small></button>
+   <button class="subject" onclick="comingSoon('الرياضيات')"><span class="ico">📐</span><b>الرياضيات</b><small>قريبًا في المكتبة</small></button>
+   <button class="subject" onclick="comingSoon('اللغة العربية')"><span class="ico">📚</span><b>اللغة العربية</b><small>قريبًا في المكتبة</small></button>
+   <button class="subject" onclick="comingSoon('اللغة الإنجليزية')"><span class="ico">🌍</span><b>اللغة الإنجليزية</b><small>قريبًا في المكتبة</small></button>
+  </div>
+  <div class="bonzo-tip"><div class="bonzo-face">🤖</div><div><b>بونزو بيقولك</b><p>مش مطلوب تحفظ وخلاص. افهم الفكرة، جرّبها، وبعدها اختبر نفسك!</p></div></div>
+  <div class="source-note" style="font-size:11px;line-height:1.8">📌 <b>مكتبة الإصدار الحالي:</b> مادة العلوم فقط، وتشمل الوحدات الأربع والدروس الإحدى عشرة المتاحة حاليًا. باقي المواد تُضاف عند تجهيز محتواها المعتمد.</div>
+  <div class="panel">
+   <div class="section-head"><h2>رحلتك في العلوم</h2><span class="muted" id="progressText">0% مكتمل</span></div>
+   <div class="progress"><span id="progressBar"></span></div>
+   <p class="muted" style="margin-bottom:0">تقدمك بيتحفظ على نفس الجهاز من خلال المتصفح.</p>
+   <button class="btn full" onclick="openScience()">ادخل معمل العلوم ←</button>
+  </div>
+ </section>
 
-    <!-- شاشة البداية -->
-    <div id="splash-screen">
-        <div class="splash-logo">BONZO</div>
-        <div class="splash-sub">كبسولة العلوم في جيبك 🧪</div>
-        <button class="skip-btn" onclick="dismissSplash()">دخول التطبيق 🚀</button>
-    </div>
+ <section id="units" class="hidden">
+  <button class="back" onclick="goHome()">→ الرئيسية</button>
+  <div style="margin-top:18px"><h2 class="screen-title">معمل العلوم 🧪</h2><p class="screen-sub">اختار الوحدة اللي عايز تستكشفها.</p></div>
+  <div id="unitList"></div>
+ </section>
 
-    <!-- شاشة القفل -->
-    <div id="lock-screen" style="display:none;">
-        <div class="lock-box">
-            <div style="font-size: 42px;">🔐</div>
-            <h2>أكاديمية العلوم</h2>
-            <p>أدخل كود التشغيل وحدد مدة اشتراك التطبيق</p>
-            
-            <div class="input-group">
-                <label>كود التفعيل السري:</label>
-                <input type="password" inputmode="numeric" id="code-input" class="lock-input" placeholder="••••••••••••••">
-            </div>
+ <section id="lessons" class="hidden">
+  <button class="back" onclick="showUnits()">→ الوحدات</button>
+  <div style="margin-top:18px"><h2 class="screen-title" id="unitTitle"></h2><p class="screen-sub" id="unitDesc"></p></div>
+  <div id="lessonList"></div>
+ </section>
 
-            <div class="input-group">
-                <label>مدة التشغيل:</label>
-                <div class="duration-row">
-                    <input type="number" id="duration-val" class="lock-input" value="30" min="1">
-                    <select id="duration-unit">
-                        <option value="days">أيام</option>
-                        <option value="hours">ساعات</option>
-                    </select>
-                </div>
-            </div>
+ <section id="learn" class="hidden">
+  <button class="back" onclick="showLessons()">→ الدروس</button>
+  <div style="margin-top:18px"><span class="pill" id="lessonUnit"></span><h2 class="screen-title" id="lessonTitle" style="margin-top:10px"></h2><p class="screen-sub">افهم الفكرة بطريقتك، ومفيش استعجال.</p></div>
+  <div class="tabs"><button class="tab active" onclick="switchTab('simple',this)">ببساطة</button><button class="tab" onclick="switchTab('deep',this)">شرح أعمق</button><button class="tab" onclick="switchTab('story',this)">قصة بونزو</button></div>
+  <article class="panel lesson-body" id="lessonContent"></article>
+  <div class="actions"><button class="btn secondary" onclick="showLearnAgain()">🔁 فهمني تاني</button><button class="btn purple" onclick="startQuiz()">🎯 اختبر فهمك</button></div>
+  <button class="btn full secondary" onclick="startGame()">🎮 العب تحدي الدرس</button>
+ </section>
 
-            <button class="btn-activate" onclick="unlockApp()">تشغيل التطبيق 🚀</button>
-            <div id="error-msg">❌ الكود غلط أو المدة غير صحيحة!</div>
-        </div>
-    </div>
+ <section id="quiz" class="hidden">
+  <button class="back" onclick="backToLearn()">→ الشرح</button>
+  <div style="margin-top:18px"><span class="pill">اختبار سريع</span><h2 class="screen-title" style="margin-top:10px">ورّينا فهمك 💡</h2><div class="progress"><span id="quizProgress"></span></div></div>
+  <div class="panel"><div class="muted" id="qCounter"></div><div class="quiz-q" id="question"></div><div id="options"></div><div class="feedback hidden" id="feedback"></div><button class="btn full" id="quizNext" onclick="nextQuestion()" disabled>السؤال التالي</button></div>
+ </section>
 
-    <!-- الهيدر -->
-    <div class="top-header">
-        <div class="brand">
-            <div class="brand-avatar">ع</div>
-            <div class="brand-info">
-                <h1>أكاديمية العلوم</h1>
-                <span>ثانية إعدادي - الترم الأول</span>
-            </div>
-        </div>
-        <div class="timer-pill" id="timer-display">⏳ جاري الحساب...</div>
-    </div>
+ <section id="game" class="hidden">
+  <button class="back" onclick="backToLearn()">→ الشرح</button>
+  <div style="margin-top:18px"><span class="pill">تحدي BONZO</span><h2 class="screen-title">مختبر الحالات والجسيمات 🧪</h2><p class="screen-sub">وصل وصف الجسيمات بالحالة المناسبة.</p></div>
+  <div class="panel"><div class="quiz-q" id="gamePrompt">مسافات بينية واسعة جدًا وقابلية عالية للانضغاط.</div><div id="gameOptions"></div><div class="feedback hidden" id="gameFeedback"></div><button class="btn full" id="gameNext" onclick="nextGame()" disabled>التحدي التالي</button></div>
+ </section>
 
-    <div class="container">
-        <!-- الرئيسية -->
-        <div id="home-view">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="margin:0; font-size: 17px;">📚 وحدات المنهج (11 درساً)</h3>
-                <span id="progress-text" style="font-size: 13px; font-weight: bold; color: var(--accent);">0 / 11 درس</span>
-            </div>
-
-            <div id="units-container"></div>
-        </div>
-
-        <!-- الخريطة الذهنية البصرية -->
-        <div id="mindmap-view">
-            <button class="back-btn" onclick="goHome()">⬅ رجوع للوحدات</button>
-            <div class="content-box">
-                <p style="font-size:13px; color:var(--text-muted); margin-top:0;">🗺️ شجرة المنهج التفاعلية - اضغط على أي فرع لمراجعة الدرس مباشرة:</p>
-                <div class="map-root" id="mm-title"></div>
-                <div class="map-trunk"></div>
-                <div class="map-card-container" id="mm-content"></div>
-            </div>
-        </div>
-
-        <!-- الدرس -->
-        <div id="lesson-view">
-            <button class="back-btn" onclick="goHome()">⬅ رجوع للوحدات</button>
-            <div class="content-box">
-                <h2 id="l-title" style="margin-top:0; color:var(--accent); font-size:19px;"></h2>
-                
-                <div class="story-explain" id="l-story"></div>
-                
-                <div class="exam-box">
-                    <h4>🎯 خلاصة الامتحان (احفظ دي للدرجات النهائية):</h4>
-                    <p id="l-exam-def"></p>
-                </div>
-
-                <div class="quiz-card">
-                    <h4 id="l-question"></h4>
-                    <div id="l-options"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- التنقل السفلي -->
-    <div class="bottom-nav">
-        <div class="nav-tab active" onclick="goHome()"><span>📚</span>الدروس</div>
-        <div class="nav-tab" onclick="openRandomQuiz()"><span>⚡</span>اختبار سريع</div>
-        <div class="nav-tab" onclick="resetLockNow()"><span>🔒</span>قفل</div>
-    </div>
-
-    <script>
-        const MASTER_CODE = "28606183300114";
-
-        // المنهج الكامل 11 درساً بالعامية المصرية المبسطة واللطيفة لطالب ثانية إعدادي + خلاصة الامتحان
-        const unitsData = [
-            {
-                id: 1,
-                title: "الوحدة الأولى: المادة وتركيبها",
-                lessons: [
-                    {
-                        id: 'u1_l1',
-                        title: 'حالات المادة وسلوكها',
-                        subtitle: 'الصلب والسائل والغاز والموائع',
-                        story: `بص يا بطل، الحكاية وما فيها إن أي حاجة حوالينا بنسميها "مادة" بشرط تكون بتاخد مكان ولها كتلة. والمادة دي مش قاعدة مؤدبة، دي جزيئاتها في حالة حركة مستمرة ما بتفصلش!
-
-تعال نقسمهم تلات حالات ببساطة:
-• الصلب: زي الحديد والخشب، الجزيئات هنا ماسكة في بعضها بـ "حب أعمى" وقوة تماسك رهيبة، لدرجة إنها مش بتعرف تتحرك من مكانها غير تهتز بس، وعشان كدا شكلها وحجمها ثابتين.
-• السائل: زي المية والعصير، الجزيئات هنا فاكّة شوية والروابط أضعف، فبتتزحلق على بعضها وتاخد شكل الكوباية أو الإناء اللي تتحط فيه.
-• الغاز: زي الهوا وبخار المية، الجزيئات دي طايرة وعاملة فرح، حرة تماماً ومفيش بينها روابط تقريباً، فبتملى أي مكان تدخله.
-
-ملحوظة بتيجي في الامتحان: السوائل والغازات بنسميهم علمياً "الموائع" لأنهم بيعرفوا ينسابوا ويسيلوا بكل سهولة.`,
-                        examDef: '• المادة: كل ما له كتلة و حجم (يشغل حيزاً من الفراغ).\n• الموائع: مواد تتصف بخاصية الانسياب ولا تأخذ شكلاً ثابتاً (وتشمل السوائل والغازات).',
-                        question: 'سؤال الامتحان: أي من المواد التالية تعتبر من "الموائع"؟',
-                        options: [
-                            { text: 'الحديد والخشب', correct: false },
-                            { text: 'الماء والهواء', correct: true },
-                            { text: 'الثلج والزجاج', correct: false }
-                        ]
-                    },
-                    {
-                        id: 'u1_l2',
-                        title: 'تغير حالات المادة (التسامي)',
-                        subtitle: 'الانصهار والتبخير والثلج الجاف',
-                        story: `المادة مش بتفضل على حالها، أول ما بنديها حرارة (طاقة) الجزيئات بتسخن وتفرفش وحالتها بتتغير:
-
-• الانصهار: زي ما تطلع حتة ثلج من الفريزر، بتسخن وتتحول من صلب لسائل.
-• التبخر: لو غليت المية على النار، الجزيئات بتاخد طاقة أكبر وتطير في الهوا وتتحول لغاز.
-• التكثف والتجمد: دول العكس بالظبط لما نسحب الحرارة ونبرد المادة.
-
-لكن العجيبة بقى اللي بتلخبط ناس كتير في الامتحان هي "التسامي"؛ ودي لما المادة ترفض تمشي بالترتيب وتقرر تنط من "صلب" لـ "غاز" علطول من غير ما تسيح وتبقى سائل أصلاً! زي حبات النفتالين اللي بنحطها في الدولاب فتطير وتختفي، أو الثلج الجاف.`,
-                        examDef: '• الانصهار: تحول المادة من الحالة الصلبة إلى الحالة السائلة بالتسخين.\n• التسامي: تحول المادة من الحالة الصلبة إلى الحالة الغازية مباشرة دون المرور بالحالة السائلة.',
-                        question: 'سؤال الامتحان: تحول المادة الصلبة إلى حالة غازية مباشرة دون مرور بالسائلة يسمى:',
-                        options: [
-                            { text: 'التسامي', correct: true },
-                            { text: 'التكثف', correct: false },
-                            { text: 'التجمد', correct: false }
-                        ]
-                    },
-                    {
-                        id: 'u1_l3',
-                        title: 'تركيب الذرة والجزيئات',
-                        subtitle: 'البروتونات والنيوترونات والإلكترونات',
-                        story: `لو مسكنا أي مادة وفضلنا نكسر فيها لحد ما نوصل لأصغر حتة تقدر تدخل في تفاعل كيميائي، هنوصل للبطل الخفي اللي اسمه "الذرة".
-
-الذرة دي من جوه عاملة زي المجموعة الشمسية بالظبط:
-1. في النص فيه "النواة": ودي التقيلة اللي شايلة كتلة الذرة كلها، وموجبة الشحنة عشان جواها نوعين من السكان: (بروتونات موجبة) و(نيوترونات متعادلة لا ليها في الموجب ولا السالب).
-2. بره النواة فيه "الإلكترونات": ودي جسيمات صغنونة خالص وسالبة الشحنة، بتلف حوالين النواة بسرعة صاروخية في طرق محددة اسمها (مستويات الطاقة).
-
-ولأن عدد البروتونات الموجبة قد عدد الإلكترونات السالبة، فالذرة في حالتها العادية متعادلة كهربياً ومش بتكهرب حد!`,
-                        examDef: '• الذرة: أصغر وحدة بناء للمادة يمكن أن تشترك في التفاعلات الكيميائية.\n• النواة: مركز الذرة وتتركز فيها كتلتها وشحنتها موجبة لاحتوائها على بروتونات موجبة ونيوترونات متعادلة.',
-                        question: 'سؤال الامتحان: توجد جسيمات سالبة الشحنة تدور حول نواة الذرة بسرعة فائقة وهي:',
-                        options: [
-                            { text: 'البروتونات', correct: false },
-                            { text: 'الإلكترونات', correct: true },
-                            { text: 'النيوترونات', correct: false }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 2,
-                title: "الوحدة الثانية: التغيرات الكيميائية والفيزيائية",
-                lessons: [
-                    {
-                        id: 'u2_l1',
-                        title: 'التفاعلات الكيميائية',
-                        subtitle: 'كسر الروابط وتكوين مواد جديدة',
-                        story: `التفاعل الكيميائي مش سحر ولا شعوذة، ده عبارة عن "فك وتركيب"!
-
-تخيل معاك مكعبات ليجو متركبة بشكل معين، فكيتها من بعضها وركبتها بشكل جديد خالص. هو ده التفاعل الكيميائي بالظبط:
-1. بنكسر الروابط القديمة اللي ماسكة جزيئات المواد المتفاعلة في بعض.
-2. بنكون روابط جديدة خالص بين الذرات عشان تطلع لنا "نواتج" ليها صفات جديدة ومختلفة تماماً عن المواد اللي بدأنا بيها، زي ما بنفاعل الزيت مع الصودا الكاوية عشان نطلع صابون ينضف إيدينا.`,
-                        examDef: '• التفاعل الكيميائي: هو كسر الروابط الموجودة في جزيئات المواد المتفاعلة وتكوين روابط جديدة في جزيئات المواد الناتجة.',
-                        question: 'سؤال الامتحان: كسر الروابط في المواد المتفاعلة وتكوين روابط جديدة في النواتج يُعرف بـ:',
-                        options: [
-                            { text: 'التفاعل الكيميائي', correct: true },
-                            { text: 'التغير الفيزيائي', correct: false },
-                            { text: 'الانصهار البحت', correct: false }
-                        ]
-                    },
-                    {
-                        id: 'u2_l2',
-                        title: 'وزن المعادلة الكيميائية',
-                        subtitle: 'قانون بقاء الكتلة ولافوازييه',
-                        story: `الكيمياء ناس حقانية وما بتاكلش حق حد! جه عالم فرنساوي شاطر اسمه "أنطوان لافوازييه" وقالنا قاعدة ذهبية اسمها (قانون بقاء الكتلة).
-
-القاعدة دي بتقول إيه؟ إن المادة لا تفنى ولا تستحدث من العدم؛ يعني مفيش ذرة بتتبخر في الهوا من غير حساب، ولا ذرة بتيجي من العدم! لو دخلت التفاعل بـ 10 جرام مواد، لازم يخرجوا 10 جرام نواتج بالمللي. وعشان كدا لازم "نوزن المعادلة الكيميائية" عشان نخلي كفة المتفاعلات قد كفة النواتج بالظبط.`,
-                        examDef: '• قانون بقاء الكتلة: مجموع كتل المواد المتفاعلة في أي تفاعل كيميائي يساوي مجموع كتل المواد الناتجة عنه.',
-                        question: 'سؤال الامتحان: العالم الذي وضع قانون بقاء الكتلة في التفاعلات الكيميائية هو:',
-                        options: [
-                            { text: 'أنطوان لافوازييه', correct: true },
-                            { text: 'ألبرت أينشتاين', correct: false },
-                            { text: 'إسحاق نيوتن', correct: false }
-                        ]
-                    },
-                    {
-                        id: 'u2_l3',
-                        title: 'التغيرات الفيزيائية والكيميائية',
-                        subtitle: 'الفرق بين قطع الورق وحرق الورق',
-                        story: `عشان ما تتلخبطش بينهم في أي سؤال، اسأل نفسك سؤال واحد بس: "هل طلعت مادة جديدة ولا لأ؟"
-
-• التغير الفيزيائي: ده تغيير في الشكل أو المنظر من بره بس! زي ما تقطع ورقة حتت صغيرة (ما هي لسه ورق)، أو تسيح حتة شمع (ما هي لسه شمع)، أو تدوب ملح في مية. مفيش أي مادة جديدة طلعت.
-• التغير الكيميائي: ده تغيير في الجوهر والتركيب، وبيطلع مادة جديدة خالص ما ينفعش ترجعها لأصلها! زي ما تولع في الورقة فتبقى رماد، أو تسيب مسمار حديد في الهوا الرطب فيصدي ويتحول لأكسيد حديد هش.`,
-                        examDef: '• التغير الفيزيائي: تغير في الشكل الظاهري للمادة دون تغير في تركيبها.\n• التغير الكيميائي: تغير في تركيب المادة ينتج عنه مواد جديدة ذات خواص جديدة.',
-                        question: 'سؤال الامتحان: صدأ الحديد واحتراق الخشب يعتبران تغيراً:',
-                        options: [
-                            { text: 'فيزيائياً', correct: false },
-                            { text: 'كيميائياً', correct: true },
-                            { text: 'ظاهرياً فقط', correct: false }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 3,
-                title: "الوحدة الثالثة: الطاقة الضوئية والبناء الضوئي",
-                lessons: [
-                    {
-                        id: 'u3_l1',
-                        title: 'عملية البناء الضوئي',
-                        subtitle: 'مطبخ النبات (الجرانا والستروما)',
-                        story: `النبات ده كائن معتمد على نفسه ومش بيطلب دليفري من حد! جوه ورق النبات الأخضر فيه مصانع صغيرة اسمها "البلاستيدات الخضراء" فيها مادة الكلوروفيل اللي بتمتص ضوء الشمس.
-
-الطبخ جوه البلاستيدة بيتم على خطوتين:
-1. تفاعلات ضوئية: ودي بتحصل في أقراص اسمها (الجرانا)، هنا النبات بيستخدم طاقة الشمس عشان يكسر جزيئات المية ويطلع لنا غاز الأكسجين اللي بنتنفسه.
-2. تفاعلات لاضوئية: ودي بتحصل في الأرضية أو الحشوة اللي اسمها (الستروما)، ومش محتاجة ضوء مباشر؛ فيها النبات بياخد ثاني أكسيد الكربون ويحوله لسكر الجلوكوز (أكل النبات).`,
-                        examDef: '• البلاستيدات الخضراء: عضيات الخلية النباتية التي تحتوي على الكلوروفيل وتتم فيها عملية البناء الضوئي.\n• الستروما: الحشوة الداخلية للبلاستيدة التي تحدث فيها التفاعلات اللاضوئية لتكوين السكر.',
-                        question: 'سؤال الامتحان: المكان الذي تحدث فيه التفاعلات اللاضوئية لعملية البناء الضوئي داخل البلاستيدة هو:',
-                        options: [
-                            { text: 'الستروما', correct: true },
-                            { text: 'الجرانا', correct: false },
-                            { text: 'الجذر الأرضي', correct: false }
-                        ]
-                    },
-                    {
-                        id: 'u3_l2',
-                        title: 'خصائص الضوء والانعكاس',
-                        subtitle: 'زاوية السقوط وزاوية الانعكاس',
-                        story: `الضوء بيمشي في خطوط مستقيمة ومش بيحود، لحد ما يخبط في سطح ناعم ولامع زي المراية، فبيرتد ويرجع تاني، وده بنسميه "انعكاس الضوء".
-
-والانعكاس ده ماشي بمسطرة وقانون ثابت:
-"زاوية السقوط = زاوية الانعكاس"
-يعني لو سلطت كشاف ليزر على مراية بزاوية 50 درجة، هيرتد وينعكس بزاوية 50 درجة بالظبط، لا بيزيد ولا بيقل!`,
-                        examDef: '• انعكاس الضوء: ارتداد موجات الضوء إلى نفس الوسط عندما تقابل سطحاً عاكساً.\n• قانون الانعكاس الأول: زاوية السقوط تساوي زاوية الانعكاس.',
-                        question: 'سؤال الامتحان: إذا كانت زاوية السقوط لشعاع ضوئي على مرآة مستوية 50 درجة، فإن زاوية الانعكاس تساوي:',
-                        options: [
-                            { text: '25 درجة', correct: false },
-                            { text: '50 درجة', correct: true },
-                            { text: '100 درجة', correct: false }
-                        ]
-                    },
-                    {
-                        id: 'u3_l3',
-                        title: 'انكسار الضوء في الوسطين',
-                        subtitle: 'ليه المعلقة بتبان مكسورة في المية؟',
-                        story: `جربت قبل كدا تحط معلقة في كوباية مية شفافة وتبص عليها من الجنب؟ هتلاقي المعلقة كأنها مكسورة نصين! بس طبعاً هي سليمة.
-
-إيه اللي حصل؟ الضوء وهو ماشي في الهوا سرعته بتكون سريعة جداً، أول ما بيدخل المية (لأن كثافتها الضوئية أكبر) سرعته بتقل فبيغير اتجاهه وينحرف عن مساره! الانحراف ده بنسميه "انكسار الضوء"، وهو اللي بيخلينا نشوف قاع حمام السباحة أو السمكة في المية أعلى من مكانها الحقيقي.`,
-                        examDef: '• انكسار الضوء: تغير مسار الشعاع الضوئي عند انتقاله مائلاً بين وسطين شفافين مختلفين في الكثافة الضوئية (نتيجة اختلاف سرعة الضوء فيهما).',
-                        question: 'سؤال الامتحان: تغير مسار الشعاع الضوئي عند انتقاله مائلاً بين وسطين شفافين مختلفين في الكثافة الضوئية يسمى:',
-                        options: [
-                            { text: 'انعكاس الضوء', correct: false },
-                            { text: 'انكسار الضوء', correct: true },
-                            { text: 'تشتت الضوء', correct: false }
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 4,
-                title: "الوحدة الرابعة: كوكب الأرض والحركات الأرضية",
-                lessons: [
-                    {
-                        id: 'u4_l1',
-                        title: 'طبقات الأرض الداخلية',
-                        subtitle: 'القشرة، الوشاح، واللب',
-                        story: `كوكب الأرض اللي إحنا ماشيين عليه ده عامل زي البيضة المسلوقة أو البصلة من جوه، متقسم لتلات طبقات فوق بعض:
-
-1. القشرة الأرضية: دي القشرة الرقيقة الخفيفة اللي بره، اللي عليها بيوتنا وبحارنا وجبالنا.
-2. الوشاح: تحت القشرة علطول، ودي طبقة سميكة جداً صخورها سخنة ومنصهرة (شبه العجينة السايحة).
-3. اللب (مركز الأرض): وده أعمق نقطة جوه الكوكب، ومتقسم اتنين: لب خارجي منصهر، و"لب داخلي" صلب جداً ومضغوط بيتكون من حديد ونيكل وحرارته نار!`,
-                        examDef: '• الوشاح: طبقة صخرية سميكة تقع أسفل القشرة الأرضية مباشرة.\n• اللب الداخلي: مركز الأرض ويتكون من عناصر فلزية ثقيلة (الحديد والنيكل) في حالة صلبة.',
-                        question: 'سؤال الامتحان: الطبقة الأكثر عمقاً في مركز كوكب الأرض وتتكون من حديد ونيكل في حالة صلبة هي:',
-                        options: [
-                            { text: 'القشرة الأرضية', correct: false },
-                            { text: 'اللب الداخلي', correct: true },
-                            { text: 'الوشاح العلوي', correct: false }
-                        ]
-                    },
-                    {
-                        id: 'u4_l2',
-                        title: 'الصفائح التكتونية والزلازل',
-                        subtitle: 'تكون البحر الأحمر والجبال',
-                        story: `قشرة الأرض مش حتة واحدة سليمة، لأ دي متكسرة لألواح صخرية ضخمة جداً اسمها "الصفائح التكتونية"، والألواح دي عايمة فوق طبقة الوشاح المنصهرة وبتتحرك ببطء شديد إحنا مش بنحس بيه.
-
-بس حركتها دي بتعمل بلاوي ومعجزات جيولوجية:
-• لو صفيحتين بعدوا عن بعض (حركة تباعدية): بتتفتح فجوة كبيرة وتتملي مية ويتكون بحر جديد، وده اللي عمل "البحر الأحمر" بتاعنا!
-• لو صفيحتين خبطوا في بعض (حركة تقاربية): الأرض بتتكرمش لفوق وتطلع سلاسل جبال عملاقة زي جبال الهيمالايا، وساعات بيحصل زلازل وبراكين.`,
-                        examDef: '• الصفائح التكتونية: ألواح صخرية ضخمة تشكل الغلاف الصخري للأرض وتتحرك ببطء فوق الوشاح.\n• ينشأ البحر الأحمر نتيجة الحركة التباعدية للصفائح التكتونية.',
-                        question: 'سؤال الامتحان: حركة تباعد صفيحتين تكتونيتين عن بعضهما تؤدي إلى نشأة:',
-                        options: [
-                            { text: 'تكون البحر الأحمر', correct: true },
-                            { text: 'سلسلة جبال الهيمالايا', correct: false },
-                            { text: 'انقراض الديناصورات', correct: false }
-                        ]
-                    }
-                ]
-            }
-        ];
-
-        let completedLessons = JSON.parse(localStorage.getItem('sci_completed_11') || '[]');
-
-        function dismissSplash() {
-            const splash = document.getElementById('splash-screen');
-            if(splash) {
-                splash.style.opacity = '0';
-                setTimeout(() => splash.style.display = 'none', 400);
-            }
-            checkSubscription();
-        }
-
-        // إخفاء شاشة البداية تلقائياً بعد ثانيتين لضمان عدم التعليق
-        setTimeout(() => {
-            const splash = document.getElementById('splash-screen');
-            if(splash && splash.style.display !== 'none') {
-                dismissSplash();
-            }
-        }, 2000);
-
-        function checkSubscription() {
-            const expiry = localStorage.getItem('sci_expiry');
-            const now = Date.now();
-            const timerEl = document.getElementById('timer-display');
-
-            if (expiry && now < parseInt(expiry)) {
-                document.getElementById('lock-screen').style.display = 'none';
-                const diff = parseInt(expiry) - now;
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                
-                if (days > 0) {
-                    timerEl.innerText = `⏳ باقي ${days} يوم و ${hours} س`;
-                } else {
-                    timerEl.innerText = `⏳ باقي ${hours} ساعة`;
-                }
-            } else {
-                localStorage.removeItem('sci_expiry');
-                document.getElementById('lock-screen').style.display = 'flex';
-                timerEl.innerText = '🔒 منتهي';
-            }
-        }
-
-        function unlockApp() {
-            const code = document.getElementById('code-input').value.trim();
-            const val = parseInt(document.getElementById('duration-val').value);
-            const unit = document.getElementById('duration-unit').value;
-            const err = document.getElementById('error-msg');
-
-            if (code === MASTER_CODE && val > 0) {
-                const ms = unit === 'days' ? val * 24 * 60 * 60 * 1000 : val * 60 * 60 * 1000;
-                localStorage.setItem('sci_expiry', Date.now() + ms);
-                err.style.display = 'none';
-                document.getElementById('code-input').value = '';
-                checkSubscription();
-            } else {
-                err.style.display = 'block';
-            }
-        }
-
-        function resetLockNow() {
-            if(confirm('عايز تقفل التطبيق وتخرج لشاشة الكود؟')) {
-                localStorage.removeItem('sci_expiry');
-                checkSubscription();
-            }
-        }
-
-        function renderHome() {
-            const container = document.getElementById('units-container');
-            container.innerHTML = '';
-            
-            let totalDone = completedLessons.length;
-            document.getElementById('progress-text').innerText = `${totalDone} / 11 درس`;
-
-            unitsData.forEach(unit => {
-                let unitDoneCount = unit.lessons.filter(l => completedLessons.includes(l.id)).length;
-                let isUnitComplete = unitDoneCount === unit.lessons.length;
-
-                const unitCard = document.createElement('div');
-                unitCard.className = 'unit-card';
-
-                let lessonsHTML = '';
-                unit.lessons.forEach(l => {
-                    let isDone = completedLessons.includes(l.id);
-                    lessonsHTML += `
-                        <div class="lesson-tree-item ${isDone ? 'done' : ''}" onclick="openLesson('${l.id}')">
-                            <div class="lesson-tree-info">
-                                <h4>${l.title} ${isDone ? '✅' : ''}</h4>
-                                <p>${l.subtitle}</p>
-                            </div>
-                            <div class="check-icon">${isDone ? '✓' : '➔'}</div>
-                        </div>
-                    `;
-                });
-
-                unitCard.innerHTML = `
-                    <div class="unit-header">
-                        <div class="unit-title-box">
-                            <h3>${unit.title}</h3>
-                            <span>${unitDoneCount} من ${unit.lessons.length} دروس متقنة</span>
-                        </div>
-                        <div class="unit-badge">${isUnitComplete ? 'مكتملة ⭐' : `${unitDoneCount}/${unit.lessons.length}`}</div>
-                    </div>
-                    <div style="margin-bottom: 12px;">${lessonsHTML}</div>
-                    <button class="mindmap-btn" onclick="openMindMap(${unit.id})">🌳 عرض الخريطة الذهنية الشجرية للوحدة</button>
-                `;
-                container.appendChild(unitCard);
-            });
-        }
-
-        function openMindMap(unitId) {
-            const unit = unitsData.find(u => u.id === unitId);
-            if(!unit) return;
-
-            document.getElementById('home-view').style.display = 'none';
-            document.getElementById('lesson-view').style.display = 'none';
-            document.getElementById('mindmap-view').style.display = 'block';
-
-            document.getElementById('mm-title').innerText = unit.title;
-            
-            let nodesHTML = '';
-            unit.lessons.forEach(l => {
-                let isDone = completedLessons.includes(l.id);
-                nodesHTML += `
-                    <div class="map-branch-node" onclick="openLesson('${l.id}')">
-                        <div>
-                            <div class="map-branch-title">📌 ${l.title} ${isDone ? '✅' : ''}</div>
-                            <div class="map-branch-sub">${l.subtitle}</div>
-                        </div>
-                        <div style="color: var(--accent); font-weight: bold; font-size: 13px;">ادخل للدرس ➔</div>
-                    </div>
-                `;
-            });
-            document.getElementById('mm-content').innerHTML = nodesHTML;
-            window.scrollTo(0,0);
-        }
-
-        function openLesson(id) {
-            let foundLesson = null;
-            unitsData.forEach(u => {
-                let l = u.lessons.find(item => item.id === id);
-                if(l) foundLesson = l;
-            });
-            if(!foundLesson) return;
-
-            document.getElementById('home-view').style.display = 'none';
-            document.getElementById('mindmap-view').style.display = 'none';
-            document.getElementById('lesson-view').style.display = 'block';
-
-            document.getElementById('l-title').innerText = foundLesson.title;
-            document.getElementById('l-story').innerText = foundLesson.story;
-            document.getElementById('l-exam-def').innerText = foundLesson.examDef;
-            document.getElementById('l-question').innerText = foundLesson.question;
-
-            const optBox = document.getElementById('l-options');
-            optBox.innerHTML = '';
-            foundLesson.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'opt-btn';
-                btn.innerText = opt.text;
-                btn.onclick = () => handleAnswer(btn, opt.correct, foundLesson.id);
-                optBox.appendChild(btn);
-            });
-            window.scrollTo(0,0);
-        }
-
-        function handleAnswer(btn, isCorrect, lessonId) {
-            const allBtns = document.querySelectorAll('.opt-btn');
-            allBtns.forEach(b => b.style.pointerEvents = 'none');
-
-            if(isCorrect) {
-                btn.classList.add('correct');
-                if(!completedLessons.includes(lessonId)) {
-                    completedLessons.push(lessonId);
-                    localStorage.setItem('sci_completed_11', JSON.stringify(completedLessons));
-                }
-                setTimeout(() => {
-                    alert('🎉 بطل العظمة! إجابة صحيحة وتم إتقان الدرس ⭐');
-                    goHome();
-                }, 400);
-            } else {
-                btn.classList.add('wrong');
-                setTimeout(() => {
-                    alert('❌ ركز في خلاصة الامتحان فوق وجرب تاني يا وحش!');
-                    allBtns.forEach(b => {
-                        b.style.pointerEvents = 'auto';
-                        b.classList.remove('wrong');
-                    });
-                }, 500);
-            }
-        }
-
-        function goHome() {
-            document.getElementById('lesson-view').style.display = 'none';
-            document.getElementById('mindmap-view').style.display = 'none';
-            document.getElementById('home-view').style.display = 'block';
-            renderHome();
-        }
-
-        function openRandomQuiz() {
-            let allLessons = [];
-            unitsData.forEach(u => allLessons.push(...u.lessons));
-            let randomLesson = allLessons[Math.floor(Math.random() * allLessons.length)];
-            openLesson(randomLesson.id);
-        }
-
-        renderHome();
-        setInterval(checkSubscription, 30000);
-
-        if('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(reg => {
-                reg.update();
-            }).catch(()=>{});
-        }
-    </script>
+ <section id="result" class="hidden">
+  <div class="panel result"><div class="medal">🏆</div><h2>برافو يا بطل!</h2><p class="muted">خلصت اختبار الدرس</p><div class="score" id="finalScore">0/3</div><p id="resultMessage">كل محاولة بتقربك من الإتقان.</p><button class="btn full" onclick="showLessons()">ارجع للدروس</button><button class="btn full secondary" onclick="startQuiz()">جرّب تاني</button></div>
+ </section>
+</main>
+<nav class="bottom"><button onclick="goHome()"><span>⌂</span>الرئيسية</button><button onclick="openScience()"><span>🧪</span>العلوم</button><button onclick="showProgress()"><span>🏅</span>إنجازاتي</button></nav>
+</div>
+<script>
+const units=[
+ {name:"المادة والطاقة",icon:"⚡",desc:"من الجسيمات الصغيرة لحد انتقال الحرارة.",lessons:[
+  {title:"حالات المادة",simple:`المادة حوالينا ليها حالات مختلفة. أشهر 3 حالات هي الصلبة والسائلة والغازية. في الصلب الجسيمات قريبة جدًا وبتتحرك في أماكنها، والسائل جسيماته قريبة لكن تقدر تنزلق، أما الغاز فجسيماته متباعدة وبتتحرك بحرية.`,deep:`<h3>الحالة الصلبة</h3><p>لها شكل وحجم ثابتان تقريبًا، وجسيماتها متقاربة وقوى التجاذب بينها قوية.</p><h3>الحالة السائلة</h3><p>لها حجم ثابت وتأخذ شكل الإناء، وجسيماتها قريبة وتتحرك بانزلاق.</p><h3>الحالة الغازية</h3><p>ليس لها شكل أو حجم ثابت، وجسيماتها متباعدة وقابلة للانضغاط بدرجة كبيرة.</p><div class="callout">ملحوظة من محتوى المنهج: البلازما حالة تنتج عند تأين الغازات إلى أيونات موجبة وإلكترونات سالبة الشحنة.</div>`,story:`تخيل إن الجسيمات في الصلب واقفة جنب بعض في طابور منظم، وفي السائل واقفين قريب لكن بيتحركوا، وفي الغاز كل واحد بيتحرك في مساحة كبيرة. دي طريقة سهلة تفتكر بيها الفرق بينهم.`,questions:[
+   {q:"أي حالة من حالات المادة جسيماتها متباعدة وقابلة للانضغاط بدرجة كبيرة؟",o:["الصلبة","السائلة","الغازية"],a:2,why:"لأن المسافات البينية بين جسيمات الغاز كبيرة، فيمكن تقليلها بالضغط."},
+   {q:"الحالة التي تتكون عند تأين الغازات إلى أيونات موجبة وإلكترونات سالبة هي:",o:["البلازما","السائل","الصلب"],a:0,why:"ده تعريف البلازما الوارد في بنك الأسئلة."},
+   {q:"المادة السائلة:",o:["لها شكل ثابت","تأخذ شكل الإناء","قابلة للانضغاط بسهولة"],a:1,why:"السائل حجمه ثابت تقريبًا لكنه يأخذ شكل الوعاء الموجود فيه."}
+  ]},
+  {title:"تغير حالات المادة",simple:"المادة ممكن تنتقل من حالة لحالة لما تكتسب حرارة أو تفقدها. الثلج لما يسخن ينصهر، والماء لما يتجمد يتحول لثلج. وفيه تغيرات تانية زي التبخر والتكثف والتسامي.",deep:"<h3>أمثلة على تغير الحالة</h3><ul><li>الانصهار: صلب إلى سائل.</li><li>التجمد: سائل إلى صلب.</li><li>التبخر: سائل إلى غاز.</li><li>التكثف: غاز إلى سائل.</li><li>التسامي: صلب إلى غاز مباشرة.</li></ul><div class='callout'>عند الضغط الجوي المعتاد: درجة انصهار الثلج 0°C ودرجة غليان الماء 100°C.</div>",story:"تخيل مكعب تلج في يوم حر: بياخد حرارة من الجو فيتحول لمياه. ولو سيبت المياه في الفريزر، تفقد حرارة وترجع تلج.",questions:[{q:"تحول الثلج الجاف من صلب إلى غاز مباشرة يسمى:",o:["التسامي","التكثف","التجمد"],a:0,why:"التسامي هو انتقال المادة من الحالة الصلبة للغازية مباشرة."},{q:"درجة غليان الماء عند الضغط الجوي المعتاد:",o:["0°C","50°C","100°C"],a:2,why:"دي القيمة المذكورة في التقييمات عند الضغط الجوي المعتاد."},{q:"تحول الغاز إلى سائل يسمى:",o:["انصهار","تكثف","تسامي"],a:1,why:"التكثف هو تحول الحالة الغازية إلى سائلة."}]},
+  {title:"الطاقة الداخلية ودرجة الحرارة",simple:"درجة الحرارة بتعبّر عن متوسط طاقة حركة جسيمات النظام. أما الطاقة الداخلية فهي مرتبطة بالطاقة الموجودة داخل النظام نتيجة حركة الجسيمات وتفاعلاتها.",deep:"<h3>النظام المغلق</h3><p>يحدث فيه تبادل للطاقة دون المادة مع الوسط المحيط.</p><h3>الحرارة النوعية</h3><p>بتوضح كمية الحرارة اللازمة لرفع درجة حرارة وحدة الكتلة درجة واحدة.</p><div class='callout'>الماء يُستخدم في التبريد لارتفاع حرارته النوعية، فيستطيع امتصاص كمية كبيرة من الحرارة مع تغير محدود نسبيًا في درجة حرارته.</div>",story:"اعتبر إن عندك كوبين، واحد مياه وواحد معدن، واخدوا نفس التسخين. درجة حرارتهم ممكن تتغير بمقادير مختلفة لأن لكل مادة حرارة نوعية مختلفة.",questions:[{q:"مقياس متوسط طاقة حركة جسيمات النظام هو:",o:["الكتلة","درجة الحرارة","الحجم"],a:1,why:"درجة الحرارة تعبر عن متوسط طاقة حركة الجسيمات."},{q:"النظام المغلق يتبادل مع الوسط:",o:["المادة فقط","الطاقة فقط","المادة والطاقة"],a:1,why:"النظام المغلق يتبادل الطاقة دون المادة."},{q:"يستخدم الماء في التبريد بسبب:",o:["حرارته النوعية المرتفعة","لونه","سرعة تجمده"],a:0,why:"ارتفاع الحرارة النوعية يساعده على امتصاص كميات كبيرة من الحرارة."}]},
+  {title:"طرق انتقال الحرارة",simple:"الحرارة بتنتقل بثلاث طرق: التوصيل، والحمل، والإشعاع. التوصيل غالبًا في المواد، والحمل في السوائل والغازات، والإشعاع يقدر ينتقل من غير وسط مادي.",deep:"<h3>التوصيل</h3><p>انتقال الطاقة الحرارية خلال المادة من غير انتقال كلي للمادة.</p><h3>الحمل</h3><p>انتقال الحرارة مع حركة السائل أو الغاز بسبب اختلاف الكثافة.</p><h3>الإشعاع</h3><p>انتقال الطاقة في صورة موجات، مثل وصول حرارة الشمس إلينا.</p>",story:"الشمس بتدفّينا بالإشعاع، والهواء الدافي حوالين المدفأة بيطلع لفوق بالحمل، والمعلقة المعدنية بتسخن بالتوصيل لما نحطها في مشروب ساخن.",questions:[{q:"تصل حرارة الشمس إلى الأرض عن طريق:",o:["التوصيل","الحمل","الإشعاع"],a:2,why:"الإشعاع لا يحتاج إلى وسط مادي، لذلك تنتقل به حرارة الشمس عبر الفضاء."},{q:"يوضع فريزر الثلاجة في الأعلى بسبب:",o:["الحمل","التوصيل","الإشعاع"],a:0,why:"الهواء البارد الأعلى كثافة يهبط لأسفل، فتتكون تيارات حمل."},{q:"انتقال الحرارة خلال جسم صلب غالبًا يكون بالت:",o:["الإشعاع","التوصيل","الحمل"],a:1,why:"التوصيل هو الطريقة الشائعة لانتقال الحرارة خلال المواد الصلبة."}]}
+ ]},
+ {name:"المادة والتفاعلات الكيميائية",icon:"🧬",desc:"اكتشف التفاعلات والمعادلات وكيمياء التغذية.",lessons:[
+  {title:"التفاعلات الكيميائية",simple:"التفاعل الكيميائي عملية بتتكسر فيها روابط في المواد المتفاعلة وتتكون روابط جديدة، فتنتج مواد جديدة بخصائص مختلفة.",deep:"<h3>المتفاعلات والنواتج</h3><p>المتفاعلات هي المواد الموجودة قبل التفاعل، والنواتج هي المواد التي تتكون بعده.</p><div class='callout'>مثال التقييم: عند وضع الخارصين في محلول كبريتات النحاس، يحل الخارصين محل النحاس ويتكون كبريتات الخارصين ويترسب النحاس.</div>",story:"تخيل قطع تركيب بتفكها وتعيد تركيبها بشكل جديد. في التفاعل الكيميائي الذرات نفسها بتُعاد ترتيباتها لتكوين مواد جديدة.",questions:[{q:"المواد الموجودة قبل حدوث التفاعل تسمى:",o:["النواتج","المتفاعلات","المذيبات"],a:1,why:"المتفاعلات هي المواد التي يبدأ بها التفاعل."},{q:"التفاعل الكيميائي ينتج عنه:",o:["مواد جديدة","اختفاء الذرات","زيادة عدد الذرات"],a:0,why:"تتكون مواد جديدة بخصائص مختلفة نتيجة إعادة ترتيب الذرات."},{q:"عند تفاعل الخارصين مع كبريتات النحاس يترسب:",o:["الحديد","النحاس","الفضة"],a:1,why:"يتكون راسب النحاس الأحمر وفق السؤال الوارد في التقييمات."}]},
+  {title:"المعادلة الكيميائية",simple:"المعادلة الكيميائية طريقة مختصرة لتمثيل التفاعل بالرموز والصيغ. لازم نوازنها بحيث عدد ذرات كل عنصر يبقى متساوي في الطرفين.",deep:"<h3>قانون بقاء الكتلة</h3><p>عدد ذرات كل عنصر يظل متساويًا قبل التفاعل وبعده، لذلك نستخدم المعاملات لموازنة المعادلة.</p><div class='callout'>مثال: 2Mg + O₂ → 2MgO</div><p>(aq) محلول مائي، و(g) غاز، و(s) صلب، والرمز Δ يدل على التسخين.</p>",story:"تخيل ميزان بكفتين: لو عدد ذرات عنصر في ناحية أكبر من التانية، المعادلة لسه مش موزونة. نغيّر المعاملات لحد ما الكفتين يتساووا.",questions:[{q:"الرمز (g) يدل على الحالة:",o:["الصلبة","الغازية","المائية"],a:1,why:"الرمز g اختصار للحالة الغازية."},{q:"في المعادلة 2Mg + O₂ → 2MgO معامل MgO هو:",o:["1","2","3"],a:1,why:"المعامل المكتوب قبل MgO هو 2."},{q:"موازنة المعادلة تعتمد على:",o:["قانون بقاء الكتلة","تغيير نوع الذرات","حذف النواتج"],a:0,why:"عدد ذرات كل عنصر يجب أن يتساوى في الطرفين."}]},
+  {title:"كيمياء التغذية",simple:"جسمنا محتاج مغذيات مختلفة: كربوهيدرات، بروتينات، دهون، فيتامينات، أملاح معدنية ومياه. كل نوع له دور مختلف في الجسم.",deep:"<h3>الكواشف المذكورة في التقييمات</h3><ul><li>الجلوكوز مع بندكت والتسخين: يتحول اللون من الأزرق إلى البرتقالي.</li><li>النشا مع اليود: يظهر لون أزرق داكن.</li><li>البروتين مع البيوريت: يظهر لون بنفسجي.</li><li>الدهون مع سودان 4: يظهر اللون الأحمر.</li></ul>",story:"اعتبر جسمك فريق، الكربوهيدرات مصدر طاقة، والبروتينات لبناء وإصلاح الأنسجة، والدهون لها أدوار مهمة ومصدر طاقة مخزن. الفريق محتاج تنوع مش لاعب واحد.",questions:[{q:"أي كاشف يستخدم للكشف عن الجلوكوز بالتسخين؟",o:["بندكت","اليود","البيوريت"],a:0,why:"بندكت الأزرق يتحول إلى البرتقالي وفق التقييم."},{q:"اللون الناتج عن اختبار البروتين بالبيوريت:",o:["أزرق داكن","بنفسجي","أحمر"],a:1,why:"اختبار البيوريت يعطي لونًا بنفسجيًا للبروتين."},{q:"اليود يكشف عن:",o:["النشا","الدهون","الماء"],a:0,why:"اليود يستخدم للكشف عن النشا."}]}
+ ]},
+ {name:"تدفق الطاقة في البناء الضوئي والتنفس الخلوي",icon:"🌿",desc:"رحلة الطاقة بين النبات والخلايا.",lessons:[
+  {title:"البناء الضوئي",simple:"النبات الأخضر بيستخدم ضوء الشمس والماء وثاني أكسيد الكربون علشان يكون غذاءه، وبيخرج الأكسجين.",deep:"<h3>داخل البلاستيدة الخضراء</h3><p>التفاعلات الضوئية تتم في أقراص الجرانا، والتفاعلات اللاضوئية وتثبيت ثاني أكسيد الكربون تتم في الستروما.</p>",story:"تخيل الورقة مصنع صغير: الضوء طاقة تشغيل، والماء وثاني أكسيد الكربون مواد خام، والنبات بيصنع الجلوكوز.",questions:[{q:"أين تتم التفاعلات الضوئية؟",o:["الستروما","أقراص الجرانا","النواة"],a:1,why:"وفق بنك الأسئلة، تتم التفاعلات الضوئية داخل أقراص الجرانا."},{q:"أرضية البلاستيدة الخضراء تسمى:",o:["الستروما","الأعراف","السيتوبلازم"],a:0,why:"الستروما هي أرضية البلاستيدة الخضراء."},{q:"من المواد اللازمة للبناء الضوئي:",o:["ثاني أكسيد الكربون","النيتروجين فقط","الملح فقط"],a:0,why:"ثاني أكسيد الكربون من المواد الداخلة في البناء الضوئي."}]},
+  {title:"التنفس الخلوي",simple:"الخلايا بتفكك الجلوكوز في سلسلة تفاعلات علشان تطلق الطاقة وتخزن جزءًا منها في صورة ATP.",deep:"<h3>أماكن المراحل</h3><p>يبدأ انشطار الجلوكوز في السيتوبلازم، وتتم مراحل لاحقة داخل الميتوكندريا. الأعراف هي ثنايا الغشاء الداخلي وتزيد مساحة سطحه.</p>",story:"تخيل الجلوكوز بطارية مشحونة، والخلية عندها محطة بتحول الطاقة المخزنة لطاقة تقدر تستخدمها في شغلها.",questions:[{q:"ثنايا الغشاء الداخلي للميتوكندريا تسمى:",o:["الجرانا","الأعراف","الستروما"],a:1,why:"الأعراف تزيد مساحة سطح الغشاء الداخلي للميتوكندريا."},{q:"انشطار الجلوكوز لحمض البيروفيك يحدث في:",o:["السيتوبلازم","الجرانا","الستروما"],a:0,why:"هذه المرحلة تحدث في السيتوبلازم وفق ملف المحتوى العلمي التفصيلي المرسل من NotebookLM."},{q:"التنفس الخلوي يحرر الطاقة في صورة:",o:["ATP","كلوروفيل","نشا"],a:0,why:"تُخزن الطاقة المتاحة للاستخدام الخلوي في صورة ATP."}]}
+ ]},
+ {name:"العمليات الجيولوجية",icon:"🌋",desc:"افهم حركة الأرض وتكوين المعادن والتربة.",lessons:[
+  {title:"تغيير سطح الأرض",simple:"سطح الأرض بيتغير مع الوقت بسبب عوامل زي التجوية والتعرية والنقل والترسيب، وكمان حركة الصفائح التكتونية.",deep:"<h3>حركة الصفائح</h3><ul><li>التباعد: تتحرك الصفائح بعيدًا عن بعضها، ومن أمثلته نشأة البحر الأحمر.</li><li>التقارب: تتحرك الصفائح نحو بعضها، ومن أمثلته تكوّن جبال الهملايا.</li><li>التحويلية: تنزلق الصفائح بجانب بعضها، ومن أمثلتها صدع سان أندرياس.</li></ul>",story:"تخيل قشرة الأرض زي قطع بازل كبيرة بتتحرك ببطء. لما تبعد أو تتقابل أو تنزلق، شكل سطح الأرض بيتغير.",questions:[{q:"نشأة البحر الأحمر ترتبط بحركة صفائح:",o:["تباعدية","تقاربية","تحويلية"],a:0,why:"وفق التقييم، البحر الأحمر نشأ نتيجة حركة تباعدية."},{q:"جبال الهملايا ترتبط بحركة:",o:["تباعدية","تقاربية","تحويلية"],a:1,why:"تكوّنت نتيجة تقارب وتصادم الصفائح."},{q:"صدع سان أندرياس مثال لحركة:",o:["تحويلية","تباعدية","تقاربية"],a:0,why:"الصفائح تنزلق بجانب بعضها في الحركة التحويلية."}]},
+  {title:"تكوين المعادن والتربة",simple:"المعادن مواد طبيعية صلبة لها تركيب كيميائي وبناء بلوري مميز. والتربة ممكن تتكون من تفتت الصخور، أو تنتقل من مكان لمكان بفعل الماء والرياح.",deep:"<h3>التربة المنقولة</h3><p>قد تختلف خصائص التربة المنقولة عن الصخور الموجودة أسفلها لأنها تكونت في مكان آخر ثم نقلتها عوامل النقل، مثل الماء والرياح.</p><div class='callout'>من أمثلة التقييم: طمي النيل المنقول من مناطق منابع النهر.</div>",story:"تخيل الرياح والمياه عربيات نقل صغيرة بتنقل فتات الصخور من مكان لمكان، ولما يستقر يتكون غطاء من التربة مختلف عن الصخر اللي تحته.",questions:[{q:"من عوامل نقل فتات الصخور:",o:["الماء والرياح","الضوء فقط","المغناطيس فقط"],a:0,why:"الماء والرياح من عوامل نقل الفتات."},{q:"قد تختلف التربة المنقولة عن الصخر أسفلها لأنها:",o:["تكونت في مكان آخر ثم نُقلت","تتكون من معدن واحد دائمًا","لا تحتوي على فتات"],a:0,why:"هذا هو السبب المذكور في التقييم الأسبوعي."},{q:"فرضية ألفريد فيجنر تسمى:",o:["الانجراف القاري","الانصهار","الحمل الحراري"],a:0,why:"الانجراف القاري هو الفرضية المرتبطة بفيجنر."}]}
+ ]}
+];
+const BONZO_SOURCE=[{"title": "الأول: حالات المادة", "english": "States of Matter", "pages": "كتاب العلوم (ص 4 – 12) | كراسة التقييمات الرسمية (ص 4 – 6).", "goals": ["تصنيف المادة إلى حالات ثلاث رئيسية (صلبة، سائلة، غازية) وحالة رابعة (البلازما).", "المقارنة بين الحالات في الشكل، الحجم، الانسيابية، والقابلية للانضغاط.", "تفسير خواص المادة بناءً على النظرية الجسيمية وقوى التجاذب والمسافات البينية.", "دراسة الحركة البراونية والانتشار والعوامل المؤثرة عليهما.", "التعرف على تطبيقات البلازما التكنولوجية في أجهزة التكييف."], "intro": "تتنوع المواد في بيئتنا بين جبال صلبة ومياه سائلة وهواء غازي، وتختلف خواصها باختلاف طريقة ترتيب وحركة دقائقها المجهرية.", "detail": "- **تعريف المادة والموائع:** المادة هي كل ما له كتلة وحجم. يُطلق مصطلح \"الموائع\" على السوائل والغازات لأنها مواد قابلة للانسياب والانتشار ولا تتخذ شكلاً ثابتاً.\n  - **مقارنة حالات المادة الثلاث:**\n    * **الحالة الصلبة:** شكل محدد وحجم ثابت، غير قابلة للانسياب أو الانضغاط؛ لأن قوى التجاذب بين الجسيمات قوية جداً والمسافات البينية صغيرة جداً.\n    * **الحالة السائلة:** حجم ثابت وشكل متغير يتخذ شكل الإناء الحاوي، قابلة للانسياب، وغير قابلة للانضغاط تقريباً.\n    * **الحالة الغازية:** ليس لها شكل أو حجم ثابت، قابلة للانسياب، وقابلة للانضغاط بدرجة كبيرة لـ اتساع المسافات البينية وضعف قوى التجاذب بين جسيماتها.\n  - **النظرية الجسيمية والحركة البراونية:** تنص النظرية الجسيمية على أن المادة تتكون من جسيمات في حالة حركة مستمرة. وتُعرف **الحركة البراونية** بأنها الحركة العشوائية لجسيمات المادة في الموائع بكافة الاتجاهات.\n  - **الانتشار:** تنتشر دقائق المادة في الغازات أسرع من السوائل. يزداد معدل الانتشار بارتفاع درجة الحرارة لزيادة طاقة حركة الجسيمات (مثل انتشار برمنجنات البوتاسيوم في الماء الساخن أسرع من البارد).\n  - **الحالة الرابعة (البلازما):** حالة تتكون عند تأين الغازات في درجات الحرارة أو الطاقة العالية إلى أيونات موجبة وإلكترونات حرة سالبة. توجد بالأنظمة الفلكية، وتُستخدم تكنولوجياً في **أجهزة تكييف الهواء** لتنقية الهواء والقضاء على الجراثيم والملوثات.", "terms": "المادة، الموائع، النظرية الجسيمية، الحركة البراونية، البلازما."}, {"title": "الثاني: تغير حالات المادة", "english": "Changes of Physical State", "pages": "كتاب العلوم (ص 13 – 24) | كراسة التقييمات الرسمية (ص 7 – 12).", "goals": ["بيان أثر اكتساب وفقد الحرارة على المسافات وقوى التجاذب.", "تعيين درجتي الانصهار والغليان وتفسير ثبات الحرارة أثناء التحول للمادة النقية.", "دراسة أثر الضغط الجوي والشوائب على درجات التحول وتطبيقات القدر الكاتم.", "المقارنة بين التسامي والتساقط (الترسيب) والعمليات العكسية.", "شرح العوامل الأربعة للتبخر وتطبيق تصنيع القهوة الفورية."], "intro": "يتحول الماء من ثلج صلب إلى سائل ثم إلى بخار غازي، وتتحكم درجة الحرارة والضغط في هذه التحولات الحيوية.", "detail": "- **تغير الحالة الحراري:** بالتسخين تزداد طاقة الحركة وتتسع المسافات وتضعف قوى التجاذب (انصهار، تبخر، تسامي). بالتبريد تقل طاقة الحركة وتقترب الجسيمات وتزداد قوى التجاذب (تجمد، تكثف، ترسيب).\n  - **ثبات الحرارة:** تظل درجة حرارة المادة النقية ثابتة أثناء الانصهار والغليان حتى اكتمال التحول لأن الطاقة الحرارية تُستهلك في تعديل الروابط والمسافات البينية.\n  - **القيم المعيارية والعوامل المؤثرة:**\n    * بالضغط الجوي المعتاد: درجة انصهار الثلج النقي = $0^\\circ\\text{C}$، ودرجة غليان الماء النقي = $100^\\circ\\text{C}$.\n    * **تأثير الضغط الجوي:** زيادة الضغط ترفع درجة الغليان (كما في **القدر الكاتم \"حلة الضغط\"** مما يسرع طهي الطعام ويوفر الوقود). انخفاض الضغط الجوي بالارتفاعات يخفض درجة الغليان (على قمة إيفرست ارتفاع $8848\\,\\text{m}$ يغلي الماء عند $69.94^\\circ\\text{C}$، وفي البحر الميت $-427\\,\\text{m}$ يغلي عند $101.4^\\circ\\text{C}$).\n    * **تأثير الشوائب والمذابات:** زيادة المذابات ترتفع بدرجة الغليان وتخفض درجة التجمد.\n  - **التسامي والترسيب:** **التسامي** هو التحول المباشر من الصلب إلى الغاز دون المرور بالسائل بالتسخين (مثل الثلج الجاف $CO_2$ الصلب وتسامي اليود). **الترسيب/التساقط** هو التحول المباشر من الغاز إلى الصلب بالتبريد (مثل تكون الصقيع).\n  - **عوامل التبخر وتطبيق القهوة الفورية:** يزداد التبخر بزيادة الحرارة، زيادة مساحة السطح، زيادة سرعة الهواء، وانخفاض الرطوبة. تُصنع القهوة الفورية بتعريض رذاذ القهوة لهواء جاف شديد الحرارة (حوالي $250^\\circ\\text{C}$).", "terms": "درجة الانصهار، درجة الغليان، التسامي، الترسيب (التساقط)، القدر الكاتم."}, {"title": "الثالث: الطاقة الداخلية ودرجة الحرارة", "english": "Internal Energy & Temperature", "pages": "كتاب العلوم (ص 25 – 34) | كراسة التقييمات الرسمية (ص 13 – 18).", "goals": ["التمييز بين الأنظمة الحرارية (المفتوح، المغلق، والمعزول).", "تعريف الطاقة الداخلية للنظام وحسابها كمجموع طاقة الحركة والوضع.", "بيان مفهوم درجة الحرارة كـ مقياس لمتوسط طاقة الحركة.", "دراسة الحرارة النوعية وتطبيقات استخدام الماء والتبريد."], "intro": "يظل الشاي الساخن دافئاً في الترمس المحكم لـ ساعات بينما يبرد فوراً في الكوب المكشوف نتيجة اختلاف طبيعة الأنظمة الحرارية.", "detail": "- **الأنظمة الحرارية:**\n    * **النظام المفتوح:** يتبادل المادة والطاقة مع الوسط المحيط (كوب شاي مكشوف).\n    * **النظام المغلق:** يتبادل الطاقة فقط دون المادة (الترمومتر الطبي).\n    * **النظام المعزول:** لا يتبادل لا مادة ولا طاقة (ترمس الشاي/الثرموس).\n  - **الطاقة الداخلية ودرجة الحرارة:** **الطاقة الداخلية** هي مجموع طاقة الحركة وطاقة الوضع لجميع جسيمات النظام. **درجة الحرارة** هي مقياس لمتوسط طاقة حركة جسيمات النظام وتعبر عن مدى سخونته أو برودته وتُقاس بالترمومتر.\n  - **الحرارة النوعية:** كمية الحرارة اللازمة لرفع درجة حرارة $1\\,\\text{kg}$ من المادة بمقدار $1^\\circ\\text{C}$، ووحدتها $J/(kg\\cdot^\\circ\\text{C})$. يمتلك الماء حرارة نوعية مرتفعة جداً، لذا يُستخدم بكثرة في تبريد محركات السيارات وأجهزة التكييف.", "terms": "النظام المفتوح، النظام المغلق، النظام المعزول، الطاقة الداخلية، درجة الحرارة، الحرارة النوعية."}, {"title": "الرابع: طرق انتقال الحرارة", "english": "Heat Transfer Methods", "pages": "كتاب العلوم (ص 35 – 42) | كراسة التقييمات الرسمية (ص 19 – 22).", "goals": ["تحديد طرق سريان الحرارة والاتزان الحراري.", "التمييز بين التوصيل، الحمل، والإشعاع.", "دراسة المواد الموصلة والعازلة وتطبيقات البولي إستيرين.", "تفسير التطبيقات الحياتية للمدفأة والفريزر وكاميرات الإشعاع."], "intro": "تشرق الشمس فتصلنا حرارتها عبر ملايين الكيلومترات من الفراغ الفضائي، فما الطرق والآليات المختلفة لانتقال الطاقة الحرارية؟", "detail": "- **شرط الانتقال والاتزان:** تنتقل الحرارة من الجسم الأعلى حرارة للأقل حتى يتساويا ويحدث **الاتزان الحراري**.\n  - **طرق الانتقال الثلاث:**\n    1. **التوصيل الحراري:** خلال الأجسام الصلبة دون انتقال الجزيئات من مكانها. تقسم إلى مواد جيدة التوصيل (المعادن كالنحاس والألومنيوم) ومواد عازلة (الخشب والـ بولي إستيرين المستخدم بين الطوب التفريغي للمباني).\n    2. **الحمل الحراري:** في الموائع (السوائل والغازات) بتغير الكثافة؛ تتمدد الجزيئات الساخنة وتقل كثافتها فترتفع لأعلى، وتستقر الباردة لأسفل. (توضع المدفأة بالأسفل والفريزر بالأعلى).\n    3. **الإشعاع الحراري:** انتقال الحرارة في الأوساط المادية والفراغ دون حاجة لوسط مادي (كـ حرارة الشمس). تُستخدم كاميرات استشعار الإشعاع الحراري للكشف عن الأجسام ليلاً.", "terms": "الاتزان الحراري، التوصيل الحراري، الحمل الحراري، الإشعاع الحراري، البولي إستيرين."}, {"title": "الأول: التفاعلات الكيميائية", "english": "Chemical Reactions", "pages": "كتاب العلوم (ص 43 – 52) | كراسة التقييمات الرسمية (ص 23 – 26).", "goals": ["التمييز بين التغير الفيزيائي والكيميائي.", "تعريف التفاعل الكيميائي ككسر وتكون للروابط.", "الاستدلال على التفاعل بالدلائل الأربعة المباشرة."], "intro": "", "detail": "- **التغير الفيزيائي والكيميائي:** الفيزيائي تغير بالظاهر دون التركيب (انصهار الشمع وذوبان السكر). الكيميائي تغير بالتركيب ينتج مواداً جديدة مختلفة الخواص (احتراق الفحم والسكر وتعفن الخبز).\n  - **تعريف التفاعل الكيميائي:** كسر الروابط الكيميائية في جزيئات المواد المتفاعلة وتكوين روابط جديدة في جزيئات المواد الناتجة.\n  - **الدلائل الأربعة للتفاعل:**\n    1. **تكون راسب:** إضافة نترات الفضة $AgNO_3$ لكلوريد الصوديوم $NaCl$ يتكون راسب أبيض من كلوريد الفضة $AgCl$.\n    2. **تغير اللون:** وضع لوح خارصين $Zn$ بمحلول كبريتات النحاس الأزرق $CuSO_4$ يختفي اللون الأزرق لتكون كبريتات الخارصين $ZnSO_4$ وترسب النحاس الأحمر.\n    3. **تصاعد غاز:** إضافة حمض $HCl$ المخفف للمغنيسيوم $Mg$ يتصاعد غاز الهيدروجين $H_2$.\n    4. **انبعاث ضوء وحرارة:** اشتعال شريط المغنيسيوم بالأكسجين يبعث توهجاً شديداً وتتكون مادة أكسيد المغنيسيوم البيضاء $MgO$.", "terms": ""}, {"title": "الثاني: المعادلة الكيميائية", "english": "Chemical Equation", "pages": "كتاب العلوم (ص 53 – 62) | كراسة التقييمات الرسمية (ص 27 – 31).", "goals": ["التعبير عن التفاعلات بـ معادلات رمزية موزونة.", "استخدام رموز الحالات الفيزيائية وشروط التفاعل.", "تحقيق قانون بقاء الكتلة."], "intro": "", "detail": "- **رموز الحالات وشروط التفاعل:** $(s)$ صلب، $(l)$ سائل، $(g)$ غاز، $(aq)$ محلول مائي. رموز الشروط: $\\Delta$ تسخين، $dil$ مخفف، $conc$ مركز، $cat$ عامل حفاز.\n  - **قانون بقاء الكتلة وزنه:** ينص قانون بقاء الكتلة على أن مجموع كتل المواد المتفاعلة يساوي مجموع كتل المواد الناتجة. ويشترط وزن المعادلة بحيث يتساوى عدد ذرات كل عنصر في طرفي المتفاعلات والنواتج (مثال: $2Mg_{(s)} + O_{2(g)} \\xrightarrow{\\Delta} 2MgO_{(s)}$).", "terms": ""}, {"title": "الثالث: كيمياء التغذية", "english": "Chemistry of Nutrition", "pages": "كتاب العلوم (ص 63 – 72) | كراسة التقييمات الرسمية (ص 32 – 35).", "goals": ["تصنيف المغذيات الكبرى (كربوهيدرات، دهون، بروتينات).", "دراسة أخطار ترسب الكوليسترول بالشرايين.", "إجراء تجارب الكواشف المعملية الأربعة."], "intro": "", "detail": "- **المغذيات الكبرى:**\n    * **الكربوهيدرات:** وقود الطاقة، أبسط صورها السكريات الأحادية كـ الجلوكوز والنشا المعقد.\n    * **الدهون (الليبدات):** أحماض دهنية وجليسرول. الإفراط يسبب ترسب **الكوليسترول** بالشرايين مسبباً انسدادها وأمراض القلب.\n    * **البروتينات:** وحدتها الأساسية الأحماض الأمينية لبناء الأنسجة.\n  - **جدول الكواشف المعملية:**\n    1. جلوكوز + **كاشف بندكت الأزرق** $\\rightarrow$ يتحول للون **البرتقالي** بالتسخين.\n    2. نشا + **محلول اليود البني** $\\rightarrow$ يتحول للون **الأزرق الداكن/الأسود**.\n    3. دهون + **كاشف سودان 4** $\\rightarrow$ يذوب ويتلون باللون **الأحمر**.\n    4. بروتين (زلال البيض) + **محلول بيوريت الأزرق** $\\rightarrow$ يتحول للون **البنفسجي**.", "terms": ""}, {"title": "الأول: عملية البناء الضوئي", "english": "Photosynthesis Process", "pages": "كتاب العلوم (ص 73 – 82) | كراسة التقييمات الرسمية (ص 36 – 39).", "goals": [], "intro": "", "detail": "- **تركيب البلاستيدة الخضراء:** غشاء مزدوج خارجي وداخلي، **الجرانا** (أقراص غشائية تحتوي على صبغة الكلوروفيل)، و**الستروما** (أرضية البلاستيدة المحتوية على الإنزيمات).\n  - **مراحل البناء الضوئي:**\n    1. **المرحلة الضوئية (بالجرانا):** يمتص الكلوروفيل الضوء لشطر الماء $H_2O$ إلى هيدروجين وأكسجين $O_2$ ينطلق كناتج ثانوي، وتخزين الطاقة في جزيئات $ATP$.\n    2. **المرحلة اللاضوئية (بالستروما):** يتحد الهيدروجين مع ثاني أكسيد الكربون $CO_2$ بمساعدة إنزيمات الستروما وطاقة $ATP$ لتصنيع سكر الجلوكوز $C_6H_{12}O_6$.\n  - **التكنولوجيا:** تُستخدم **الزراعة العمودية** متعددة الطوابق لزيادة الإنتاج في المساحات الضيقة.", "terms": ""}, {"title": "الثاني: عملية التنفس الخلوي", "english": "Cellular Respiration Process", "pages": "كتاب العلوم (ص 83 – 92) | كراسة التقييمات الرسمية (ص 40 – 43).", "goals": [], "intro": "", "detail": "- **تركيب الميتوكندريا:** غشاء خارجي وداخلي به انثناءات تُعرف بـ **الأعراف** لزيادة مساحة سطح تفاعلات إنتاج الطاقة، وحشوة الميتوكندريا.\n  - **مراحل التنفس الخلوي:**\n    1. **انشطار الجلوكوز (بالسيتوبلازم):** ينشطر الجلوكوز لا هوائياً إلى جزيئين من **حمض البيروفيك** وتنطلق كمية قليلة من $ATP$.\n    2. **دورة كريبس وسلسلة نقل الإلكترون (داخل الميتوكندريا):** يتأكسد البيروفيك بالأكسجين بحشوة وأعراف الميتوكندريا مفرغاً كميات ضخمة من $ATP$ والماء و$CO_2$.\n  - **المقارنة:** البناء الضوئي عملية بناء وتخزين للطاقة في الجلوكوز، بينما التنفس الخلوي عملية هدم وتحرير للطاقة المختزنة في صورة $ATP$.", "terms": ""}, {"title": "الأول: تغيير سطح الأرض", "english": "Changing Earth's Surface", "pages": "كتاب العلوم (ص 93 – 102) | كراسة التقييمات الرسمية (ص 44 – 46).", "goals": [], "intro": "", "detail": "- **الانجراف القاري (فيجنر 1912):** القارات كانت قارة واحدة عظيمة تُسمى (بانجيا) وانفصلت عبر ملايين السنين.\n  - **الصفائح التكتونية وحركاتها الثلاث:**\n    1. **حركة تباعدية بنائية:** تتباعد الصفائح لتنشئ بحاراً ومحيطات (مثل **نشأة البحر الأحمر**).\n    2. **حركة تقاربية هدامة:** تصطدم الصفائح لتنشئ سلاسل الجبال العظيمة (مثل **جبال الهملايا وجبال الأنديز**).\n    3. **حركة تحويلية انزلاقية:** تنزلق صفحة بجانب أخرى مسببة الصدوع (مثل **صدع سان أندرياس**).\n  - **العوامل السريعة:** البراكين (تضيف صخوراً وجبالاً كـ كليمنجارو)، الزلازل (هزات مسببة انكسارات)، والنيازك (تسبب حفر الفوهات النيزكية كـ **حفرة جبل الكامل بمصر**).", "terms": ""}, {"title": "الثاني: تكوين المعادن والتربة", "english": "Formation of Minerals & Soil", "pages": "كتاب العلوم (ص 103 – 112) | كراسة التقييمات الرسمية (ص 47 – 52).", "goals": [], "intro": "", "detail": "- **تعريف المعدن والشروط الأربعة:** مادة صلبة، طبيعية، غير عضوية، ذات نظام بلوري محدد وتركيب كيميائي محدد.\n  - **الخواص الفيزيائية للمعادن:**\n    * **اللون:** ثابت (كالأصفر بـ الكبريت) أو متغير بالشوائب (كـ الكوارنز).\n    * **البريق:** عكس الضوء كـ البريق الفلزي لـ **معدن الكحل (الجالينا)**.\n    * **الشفافية:** شفافة، نصف شفافة، ومعتمة (كـ المايكا والتلك).\n  - **نشأة التربة وأنواعها:**\n    * **التربة المنقولة:** تفتتت بـ مكان ونُقلت بفعل عوامل النقل لتستقر بمكان آخر وتختلف عن صخورها الأصلية (مثل **تربة طمي النيل** المنقولة من هضبة الحبشة).\n    * **التربة المحلية (الوضعية):** نشأت بمكانها نتيجة التجوية البطيئة للصخور الأصلية الواقعة أسفلها وتشبهها بالتركيب.", "terms": ""}];
+let unitIndex=0,lessonIndex=0,tabMode="simple",quizIndex=0,quizScore=0,answered=false,gameIndex=0,gameScore=0;
+const $=id=>document.getElementById(id);
+function hideAll(){["home","units","lessons","learn","quiz","game","result"].forEach(x=>$(x).classList.add("hidden"))}
+function show(id){hideAll();$(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+function goHome(){show("home");$("heroTitle").textContent="المعرفة أقرب مما تتخيل";$("heroDesc").textContent="اتعلم، جرّب، العب، وخلّي كل درس خطوة جديدة لقدّام."}
+function openScience(){renderUnits();show("units")}
+function renderUnits(){$("unitList").innerHTML=units.map((u,i)=>`<button class="unit-card" style="width:100%;text-align:right" onclick="openUnit(${i})"><div class="unit-icon">${u.icon}</div><div class="grow"><b>الوحدة ${["الأولى","الثانية","الثالثة","الرابعة"][i]}: ${u.name}</b><small>${u.lessons.length} دروس · ${u.desc}</small></div><span class="arrow">‹</span></button>`).join("")}
+function openUnit(i){unitIndex=i;const u=units[i];$("unitTitle").textContent=u.name;$("unitDesc").textContent=u.desc;$("lessonList").innerHTML=u.lessons.map((l,j)=>`<button class="lesson-card" style="width:100%;text-align:right" onclick="openLesson(${j})"><span class="lesson-num">${j+1}</span><span class="grow"><b>${l.title}</b><small>شرح · قصة · اختبار · لعبة</small></span><span class="pill">ابدأ</span></button>`).join("");show("lessons")}
+function showUnits(){show("units")}
+function showLessons(){openUnit(unitIndex)}
+function openLesson(i){lessonIndex=i;tabMode="simple";renderLesson();show("learn")}
+function renderLesson(){$("lessonTitle").textContent=units[unitIndex].lessons[lessonIndex].title;$("lessonUnit").textContent=units[unitIndex].name;document.querySelectorAll(".tab").forEach((t,i)=>t.classList.toggle("active",["simple","deep","story"][i]===tabMode));const l=units[unitIndex].lessons[lessonIndex];let txt=l[tabMode];if(tabMode==="simple")txt=`<h3>الفكرة ببساطة</h3><p>${txt}</p><div class="callout">💡 افتكر: الفهم أهم من الحفظ، جرّب تشرح الفكرة بكلامك.</div>`;if(tabMode==="story")txt=`<h3>حكاية بونزو</h3><div class="story">${txt}</div>`;
+if(tabMode==="deep"){
+ const ref=BONZO_SOURCE.find(x=>x.title.includes(l.title) || l.title.includes(x.title.replace(/^(الأول|الثاني|الثالث|الرابع): /,'')));
+ if(ref){
+  const goals=ref.goals.length?`<h4>أهداف التعلم في ملف المنهج</h4><ol>${ref.goals.map(x=>`<li>${x}</li>`).join('')}</ol>`:'';
+  const detail=ref.detail?`<h4>تفاصيل المحتوى العلمي</h4><div>${ref.detail.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\$(.*?)\$/g,'<code>$1</code>')}</div>`:'';
+  const intro=ref.intro?`<div class="source-note"><strong>تمهيد الدرس:</strong> ${ref.intro}</div>`:'';
+  const terms=ref.terms?`<h4>مصطلحات الدرس</h4><p>${ref.terms}</p>`:'';
+  txt+=`<details class="source-box"><summary>📘 تفاصيل المنهج من ملف NotebookLM</summary><div class="source-inner"><div class="source-meta">${ref.english} · ${ref.pages}</div>${intro}${goals}${detail}${terms}</div></details>`;
+ }
+}
+$("lessonContent").innerHTML=txt}
+function switchTab(mode,el){tabMode=mode;renderLesson()}
+function showLearnAgain(){tabMode="simple";renderLesson()}
+function startQuiz(){quizIndex=0;quizScore=0;answered=false;loadQuestion();show("quiz")}
+function loadQuestion(){const qs=units[unitIndex].lessons[lessonIndex].questions;let q=qs[quizIndex];$("qCounter").textContent=`السؤال ${quizIndex+1} من ${qs.length}`;$("question").textContent=q.q;$("options").innerHTML=q.o.map((o,i)=>`<button class="option" onclick="chooseAnswer(${i})">${["أ","ب","ج","د"][i]}) ${o}</button>`).join("");$("feedback").classList.add("hidden");$("quizNext").disabled=true;$("quizNext").textContent=quizIndex===qs.length-1?"اعرض النتيجة":"السؤال التالي";$("quizProgress").style.width=((quizIndex)/qs.length*100)+"%";answered=false}
+function chooseAnswer(i){if(answered)return;answered=true;const q=units[unitIndex].lessons[lessonIndex].questions[quizIndex];document.querySelectorAll("#options .option").forEach((b,j)=>{if(j===q.a)b.classList.add("correct");else if(j===i)b.classList.add("wrong");b.disabled=true});if(i===q.a)quizScore++;$("feedback").textContent=(i===q.a?"إجابة صحيحة! عاش 👏 ":"مش مشكلة، نتعلم من الغلطة. ")+q.why;$("feedback").classList.remove("hidden");$("quizNext").disabled=false}
+function nextQuestion(){const n=units[unitIndex].lessons[lessonIndex].questions.length;if(quizIndex<n-1){quizIndex++;loadQuestion()}else{localStorage.setItem("bonzo_done_"+unitIndex+"_"+lessonIndex,"1");showResult()}}
+function showResult(){let n=units[unitIndex].lessons[lessonIndex].questions.length;$("finalScore").textContent=quizScore+"/"+n;$("resultMessage").textContent=quizScore===n?"إتقان ممتاز! تستاهل شارة بطل الدرس 🌟":"أداء كويس! راجع الجزء اللي محتاج تثبيت وجرب تاني.";$("progressText").textContent=Math.round(getProgress()*100)+"% مكتمل";$("progressBar").style.width=(getProgress()*100)+"%";show("result")}
+const gameChallenges=[{p:"مسافات بينية واسعة جدًا وقابلية عالية للانضغاط.",o:["صلبة","سائلة","غازية"],a:2,w:"الغاز جسيماته متباعدة وقابل للانضغاط."},{p:"شكل ثابت وقوى تجاذب قوية جدًا.",o:["صلبة","سائلة","غازية"],a:0,w:"الجسيمات في الحالة الصلبة متقاربة وقوى التجاذب قوية."},{p:"قابل للانسياب ويأخذ شكل الإناء.",o:["صلبة","سائلة","غازية"],a:1,w:"السائل يأخذ شكل الإناء مع احتفاظه بحجم شبه ثابت."}];
+function startGame(){gameIndex=0;gameScore=0;loadGame();show("game")}
+function loadGame(){$("gamePrompt").textContent=gameChallenges[gameIndex].p;$("gameOptions").innerHTML=gameChallenges[gameIndex].o.map((x,i)=>`<button class="option" onclick="chooseGame(${i})">${x}</button>`).join("");$("gameFeedback").classList.add("hidden");$("gameNext").disabled=true;$("gameNext").textContent=gameIndex===2?"إنهاء التحدي":"التحدي التالي"}
+function chooseGame(i){const c=gameChallenges[gameIndex];document.querySelectorAll("#gameOptions .option").forEach((b,j)=>{if(j===c.a)b.classList.add("correct");else if(j===i)b.classList.add("wrong");b.disabled=true});if(i===c.a)gameScore++;$("gameFeedback").textContent=(i===c.a?"صح عليك! 🎉 ":"ركز في ترتيب الجسيمات. ")+c.w;$("gameFeedback").classList.remove("hidden");$("gameNext").disabled=false}
+function nextGame(){if(gameIndex<2){gameIndex++;loadGame()}else{alert(`خلصت التحدي! نتيجتك ${gameScore}/3`);localStorage.setItem("bonzo_game_particles","1");show("learn")}}
+function backToLearn(){show("learn")}
+function getProgress(){let total=units.reduce((s,u)=>s+u.lessons.length,0),done=0;units.forEach((u,i)=>u.lessons.forEach((l,j)=>{if(localStorage.getItem("bonzo_done_"+i+"_"+j))done++}));return done/total}
+function showProgress(){alert("إنجازاتك في نسخة BONZO: "+Math.round(getProgress()*100)+"% من دروس العلوم مكتمل. التقدم محفوظ على نفس الجهاز.");}
+function comingSoon(name){alert(name+" هتكون ضمن المكتبة الكاملة. المعاينة الحالية مركزة على العلوم.");}
+$("progressText").textContent=Math.round(getProgress()*100)+"% مكتمل";$("progressBar").style.width=(getProgress()*100)+"%";
+</script>
 </body>
 </html>
